@@ -1,6 +1,8 @@
 import { PlanejadorSetmanal }from './components/PlanejadorSetmanal';
 import { Eines } from './components/Eines';
 import { usePlanejadorStore } from './stores/store';
+import { useEinesStore } from './stores/storeEines';
+import { Formulari } from './components/Formulari';
 
 
 
@@ -8,6 +10,7 @@ import { usePlanejadorStore } from './stores/store';
 function App() {
 
   const { colorEscollitTemporal, setGeneraBackgroundColor, generaBackgroundColor, setColorEscollitTemporal} = usePlanejadorStore();
+  const { einaSeleccionada } = useEinesStore();
 
    const applyBackgroundIfSelected = () => {
     if (colorEscollitTemporal) {
@@ -31,8 +34,16 @@ function App() {
       <div className="ml-8" onClick={(e) => e.stopPropagation()}>
         <PlanejadorSetmanal />
       </div>
+      {/* ─── Formulari d'activitats─── */}
+  {einaSeleccionada?.nom === 'Afegeix activitat' && 
+    <div onClick={(e) => e.stopPropagation()}>
+    <Formulari />
+    </div>
+  } 
     </div>
   );
+  
+
 }
 
 export default App

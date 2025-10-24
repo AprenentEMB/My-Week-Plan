@@ -6,8 +6,8 @@ interface PlanejadorState {
     hores: string[];
     setActivitats: (clau: string, valor: string) => void;
     setHores: (hores: string[]) => void;
-    cellafusionada: string[];
-    setCellaFusionada: (clau: string[]) => void;
+    cellaFusionada: Fusio[];
+    setCellaFusionada: (fusions: Fusio[]) => void;
     colorEscollitTemporal?: string;
     generaBackgroundColor?: string;
     cellsBackgroundsColor?: Record<string, string>;
@@ -17,19 +17,21 @@ interface PlanejadorState {
 
 }
 
+interface Fusio {
+  superior: string;
+  files: number;
+}
+
 export const usePlanejadorStore = create<PlanejadorState>()(
     persist(
         (set) => ({
             activitats: {},
             hores: Array.from({ length: 24 }, (_, i) => `${String((i + 7) % 24).padStart(2, '0')}:00`),
-            cellafusionada: [],
+            cellaFusionada: [],
             generaBackgroundColor: "black",
             cellsBackgroundsColor: {},
             colorEscollitTemporal: undefined,
-            setCellaFusionada: (clau) =>
-                set(() => ({
-                    cellafusionada: clau,
-                })),
+            setCellaFusionada: (fusions) => set({ cellaFusionada: fusions }),
             setActivitats: (clau, valor) =>
                 set((state) => ({
                     activitats: {

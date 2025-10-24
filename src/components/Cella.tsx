@@ -1,76 +1,121 @@
 import { useState} from "react";
-import { useEinesStore } from "../stores/storeEines";
 import { usePlanejadorStore } from "../stores/store";
+import { useEinesStore } from "../stores/storeEines";
 
-export interface CellaProps {
+export function Cella({
+  clau,
+  valor,
+  estaEditant,
+  començarEdicio,
+  guardarEdicio,
+}: {
   clau: string;
-  estaEditant: boolean;
   valor: string;
+  estaEditant: boolean;
   començarEdicio: (clau: string) => void;
   guardarEdicio: (clau: string, nouValor: string) => void;
-}
+}) {
+  const { hores, cellaFusionada, setCellaFusionada, cellsBackgroundsColor, setCellsBackgroundsColor, colorEscollitTemporal } =
+    usePlanejadorStore();
+  const { einaSeleccionada } = useEinesStore();
+  const [localValor, setLocalValor] = useState(valor);
 
-export function Cella({ clau, estaEditant, valor, començarEdicio, guardarEdicio}: CellaProps) {
+  const [dia, hora] = clau.split("-");
+  const idx = hores.indexOf(hora);
 
-  const { einaSeleccionada, setEinaSeleccionada} = useEinesStore();
+  // 🔹 Fusió múltiple
+  const fusio = cellaFusionada.find((f) => f.superior === clau);
+  const esSuperiorFusionada = !!fusio;
 
-  const [valorTemporal, setValorTemporal] = useState<string>(valor);
+  const esInferiorFusionada = cellaFusionada.some((f) => {
+    const idxSuperior = hores.indexOf(f.superior.split("-")[1]);
+    const idxActual = hores.indexOf(hora);
+    return dia === f.superior.split("-")[0] && idxActual > idxSuperior && idxActual < idxSuperior + f.files;
+  });
 
-  const { cellafusionada, setCellaFusionada, colorEscollitTemporal, setCellsBackgroundsColor, cellsBackgroundsColor = {}, hores} = usePlanejadorStore();
+  if (esInferiorFusionada) return null;
 
-  return (
-    <td className={`border border-gray-300 p-2 text-center focus:outline-none focus:ring-2 focus:ring-blue-400 hover:bg-gray-100 cursor-pointer ${cellafusionada.includes(clau) ? "border-b-transparent" : "border-b-white"}`} style={cellsBackgroundsColor[clau] ? { backgroundColor: cellsBackgroundsColor[clau] } : undefined}  onClick={() => {
-      if (einaSeleccionada?.nom === "Pinta" && colorEscollitTemporal) {
-    // si la cel·la està fusionada, també pintem la cel·la de sota (si existeix)
-    if (cellafusionada.includes(clau)) {
-      const [dia, hora] = clau.split("-");
-      const idx = hores.indexOf(hora);
-      if (idx !== -1 && idx < hores.length - 1) {
-        const clauBaixa = `${dia}-${hores[idx + 1]}`;
-        setCellsBackgroundsColor(clauBaixa, colorEscollitTemporal);
-      }
+  const rowSpan = esSuperiorFusionada ? fusio.files : 1;
+
+  const handleClick = () => {
+    if (!einaSeleccionada) {
+      if (!estaEditant) començarEdicio(clau);
+      return;
     }
 
-    // pintem la cel·la clicada
-    setCellsBackgroundsColor(clau, colorEscollitTemporal);
-    setEinaSeleccionada(null);
-    return;
-  }
-      if (einaSeleccionada?.nom === "Goma") {
+    switch (einaSeleccionada.nom) {
+      case "Fusiona":
+        if (fusio) {
+          const noves = cellaFusionada.map((f) =>
+            f.superior === clau ? { ...f, files: f.files + 1 } : f
+          );
+          setCellaFusionada(noves);
+        } else {
+          setCellaFusionada([...cellaFusionada, { superior: clau, files: 2 }]);
+        }
+        break;
+
+      case "Parteix":
+        setCellaFusionada(
+          cellaFusionada.filter(
+            (f) => f.superior !== clau && !esInferiorFusionada
+          )
+        );
+        break;
+
+      case "Pinta":
+        if (colorEscollitTemporal) {
+          // pinta també cel·les fusionades
+          if (esSuperiorFusionada) {
+            for (let i = 0; i < rowSpan; i++) {
+              const clauBaixa = `${dia}-${hores[idx + i]}`;
+              setCellsBackgroundsColor(clauBaixa, colorEscollitTemporal);
+            }
+          } else {
+            setCellsBackgroundsColor(clau, colorEscollitTemporal);
+          }
+        }
+        break;
+
+      case "Goma":
+        // elimina el text
         guardarEdicio(clau, "");
-        setEinaSeleccionada(null);
-        return;
-      }
-      if (einaSeleccionada?.nom === "Fusiona") {
-        //fem que el color del background de la cela sigui el del bg per simular que s'ha esborrat
-        setCellaFusionada([...cellafusionada, clau]);
-        setEinaSeleccionada(null);
-        return;
-      }
-      if (einaSeleccionada?.nom === "Parteix") {
-        //si la cela esta fusionada, la separem
-        setCellaFusionada(cellafusionada.filter(c => c !== clau));
-        setEinaSeleccionada(null);
-        return;
-      }
-      if (!estaEditant) començarEdicio(clau);
-    }}
-    onKeyDown={(e) => {
-      if (e.key === "Enter" && !estaEditant) començarEdicio(clau);
-    }}
-    tabIndex={0}
-        title="Fes clic per editar">
+        // elimina el color de fons
+        if (esSuperiorFusionada) {
+          for (let i = 0; i < rowSpan; i++) {
+            const clauBaixa = `${dia}-${hores[idx + i]}`;
+            setCellsBackgroundsColor(clauBaixa, "");
+          }
+        } else {
+          setCellsBackgroundsColor(clau, "");
+        }
+        break;
+
+      default:
+        break;
+    }
+  };
+
+  return (
+    <td
+      rowSpan={rowSpan}
+      className={`border border-gray-300 p-2 text-center cursor-pointer hover:bg-gray-100 ${
+        cellsBackgroundsColor?.[clau] ? "" : ""
+      }`}
+      style={cellsBackgroundsColor?.[clau] ? { backgroundColor: cellsBackgroundsColor?.[clau] } : undefined}
+      onClick={handleClick}
+    >
       {estaEditant ? (
         <input
-          type="text"
-          value={valorTemporal}
-          autoFocus
-          onChange={(e) => setValorTemporal(e.target.value)}
-          className="border border-gray-400 p-1 w-full"
-          onBlur={() => guardarEdicio(clau, valorTemporal)}
+          className="w-full text-center border-none focus:ring-2 focus:ring-blue-400"
+          value={localValor}
+          onChange={(e) => setLocalValor(e.target.value)}
+          onBlur={() => guardarEdicio(clau, localValor)}
           onKeyDown={(e) => {
-            if (e.key === "Enter") guardarEdicio(clau, valorTemporal);
+            if (e.key === "Enter") guardarEdicio(clau, localValor);
+            if (e.key === "Escape") setLocalValor(valor);
           }}
+          autoFocus
         />
       ) : (
         <span>{valor}</span>
@@ -78,3 +123,6 @@ export function Cella({ clau, estaEditant, valor, començarEdicio, guardarEdicio
     </td>
   );
 }
+
+
+

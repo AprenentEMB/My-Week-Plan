@@ -171,5 +171,7 @@ export function PlanejadorSetmanal() {
 
 
 /*
+Formulari per omplir varies hores amb una activitat
+Que el nom estigui al mig quan es fusiona
 Poder esborrar la linea de les 7 a les 7:30 nomes de dimarts amb la eina de la goma, la meva idea es clicar amb la gomma una cela i que el estil canvii el bg-b el color del fons de la taula per seblar que desapareixi.
 */

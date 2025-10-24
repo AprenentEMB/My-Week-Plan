@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+
 
 export interface Eina {
     nom: string;
@@ -13,20 +13,19 @@ interface EinesState {
     setEinaSeleccionada: (eina: Eina | null) => void;
 }
 
-export const useEinesStore = create<EinesState>()(
-    persist(
+export const useEinesStore = create<EinesState>(
+    
         (set) => ({
             einesDisponibles: [
                 { nom: 'Parteix', icona: '✂️' },
                 { nom: 'Fusiona', icona: '🔗' },
                 { nom: 'Goma', icona: '🩹' },
                 { nom: 'Pinta', icona: '🎨' },
+                { nom: 'Deixa l\'eina', icona: '✋' },
+                { nom: 'Afegeix activitat', icona: '📝' },
             ],
             einaSeleccionada: null,
             setEinaSeleccionada: (eina) => set({ einaSeleccionada: eina }),
         }),
-        {
-            name: 'eines-storage', // nom de la clau a l'emmagatzematge
-        }
-    )
-);
+        
+    );
