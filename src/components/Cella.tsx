@@ -1,6 +1,8 @@
 import { useState} from "react";
 import { usePlanejadorStore } from "../stores/store";
 import { useEinesStore } from "../stores/storeEines";
+import { textColorClassForBackground } from "../utils/text-color";
+
 
 export function Cella({
   clau,
@@ -15,7 +17,7 @@ export function Cella({
   començarEdicio: (clau: string) => void;
   guardarEdicio: (clau: string, nouValor: string) => void;
 }) {
-  const { hores, cellaFusionada, setCellaFusionada, cellsBackgroundsColor, setCellsBackgroundsColor, colorEscollitTemporal } =
+  const { hores, cellaFusionada, setCellaFusionada, cellsBackgroundsColor, setCellsBackgroundsColor, colorEscollitTemporal, generaBackgroundColor } =
     usePlanejadorStore();
   const { einaSeleccionada } = useEinesStore();
   const [localValor, setLocalValor] = useState(valor);
@@ -36,6 +38,10 @@ export function Cella({
   if (esInferiorFusionada) return null;
 
   const rowSpan = esSuperiorFusionada ? fusio.files : 1;
+
+  const cellBgColor = cellsBackgroundsColor?.[clau];
+  const effectiveBg = cellBgColor ?? generaBackgroundColor ?? "#ffffff";
+  const textClass = textColorClassForBackground(effectiveBg);
 
   const handleClick = () => {
     if (!einaSeleccionada) {
@@ -100,14 +106,14 @@ export function Cella({
     <td
       rowSpan={rowSpan}
       className={`border border-gray-300 p-2 text-center cursor-pointer hover:bg-gray-100 ${
-        cellsBackgroundsColor?.[clau] ? "" : ""
+        textClass
       }`}
-      style={cellsBackgroundsColor?.[clau] ? { backgroundColor: cellsBackgroundsColor?.[clau] } : undefined}
+      style={cellBgColor ? { background: cellBgColor } : {}}
       onClick={handleClick}
     >
       {estaEditant ? (
         <input
-          className="w-full text-center border-none focus:ring-2 focus:ring-blue-400"
+          className={`w-full text-center border-none focus:ring-2 focus:ring-blue-400 ${textClass}`}
           value={localValor}
           onChange={(e) => setLocalValor(e.target.value)}
           onBlur={() => guardarEdicio(clau, localValor)}

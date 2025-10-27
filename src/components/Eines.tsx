@@ -1,6 +1,7 @@
 import { useState} from "react";
 import { useEinesStore } from "../stores/storeEines";
 import { usePlanejadorStore } from "../stores/store"; // ajusta la ruta si cal
+import { palette } from "../conts/paleta"; // defineix una paleta de colors aquí o importa-la des d'un altre lloc
 
 export function Eines() {
   const { einesDisponibles, einaSeleccionada, setEinaSeleccionada } = useEinesStore();
@@ -9,11 +10,7 @@ export function Eines() {
 
 
 
-  const palette = [
-    "#ffffff", "#f8fafc", "#f1f5f9", "#e2e8f0",
-    "#fecaca", "#fb923c", "#facc15", "#86efac",
-    "#60a5fa", "#7c3aed", "#000000"
-  ];
+ 
 
   const handleEinaClick = (eina: { nom: string; icona: string }) => {
     if (eina.nom === "Deixa l'eina") {
@@ -46,20 +43,21 @@ export function Eines() {
 
 
   return (
-    <div className="flex flex-col items-center gap-3">
-      <div className="flex space-x-4 justify-center mt-4">
+    <div className="flex flex-col items-center gap-2">
+      <div className="flex space-x-2 justify-center mt-4">
         {einesDisponibles.map((eina) => (
-          <button
-            key={eina.nom}
-            className={`p-2 border rounded flex flex-col items-center ${
-              einaSeleccionada?.nom === eina.nom ? "bg-blue-500 text-white" : "bg-white text-black"
-            }`}
-            onClick={() => handleEinaClick(eina)}
-            type="button"
-          >
-            <span className="text-2xl">{eina.icona}</span>
-            <div className="text-sm">{eina.nom}</div>
-          </button>
+            <div key={eina.nom} className="flex flex-col items-center gap-3">
+    <button
+      className={`w-16 h-16 flex items-center justify-center rounded-full border transition-colors ${
+        einaSeleccionada?.nom === eina.nom ? "bg-blue-500 text-white" : "bg-white text-black"
+      }`}
+      onClick={() => handleEinaClick(eina)}
+      type="button"
+    >
+      <span className="text-2xl leading-none">{eina.icona}</span>
+    </button>
+    <div className="text-xs text-center px-1">{eina.nom}</div>
+  </div>
         ))}
       </div>
 
@@ -94,7 +92,7 @@ export function Eines() {
                   title={c}
                   onClick={handleColorClick(c)}
                   className={`w-8 h-8 rounded border ${colorEscollitTemporal === c ? "ring-2 ring-offset-1 ring-blue-500" : ""}`}
-                  style={{ backgroundColor: c }}
+                  style={{ background: c }}
                   type="button"
                 />
               ))}
