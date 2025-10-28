@@ -20,6 +20,7 @@ export const useEinesStore = create<EinesState>(
                 { nom: 'Parteix', icona: '✂️' },
                 { nom: 'Fusiona', icona: '🔗' },
                 { nom: 'Goma', icona: '🩹' },
+                { nom: 'Tipografia', icona: '🔤' },
                 { nom: 'Pinta', icona: '🎨' },
                 { nom: 'Deixa l\'eina', icona: '✋' },
                 { nom: 'Afegeix activitat', icona: '📝' },

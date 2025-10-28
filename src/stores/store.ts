@@ -11,9 +11,11 @@ interface PlanejadorState {
     colorEscollitTemporal?: string;
     generaBackgroundColor?: string;
     cellsBackgroundsColor?: Record<string, string>;
+    fontFamily?: string;
     setGeneraBackgroundColor: (color: string) => void;
     setCellsBackgroundsColor: (clau: string, color: string) => void;
     setColorEscollitTemporal: (color: string) => void;
+    setFontFamily: (font: string) => void;
 
 }
 
@@ -29,6 +31,7 @@ export const usePlanejadorStore = create<PlanejadorState>()(
             hores: Array.from({ length: 24 }, (_, i) => `${String((i + 7) % 24).padStart(2, '0')}:00`),
             cellaFusionada: [],
             generaBackgroundColor: "black",
+            fontFamily: "Arial, sans-serif",
             cellsBackgroundsColor: {},
             colorEscollitTemporal: undefined,
             setCellaFusionada: (fusions) => set({ cellaFusionada: fusions }),
@@ -54,6 +57,10 @@ export const usePlanejadorStore = create<PlanejadorState>()(
                 setColorEscollitTemporal: (color) =>
                 set(() => ({
                     colorEscollitTemporal: color,
+                })),
+            setFontFamily: (font) =>
+                set(() => ({
+                    fontFamily: font,
                 })),
         }),
         {

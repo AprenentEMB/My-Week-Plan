@@ -2,10 +2,11 @@ import { useState} from "react";
 import { useEinesStore } from "../stores/storeEines";
 import { usePlanejadorStore } from "../stores/store"; // ajusta la ruta si cal
 import { palette } from "../conts/paleta"; // defineix una paleta de colors aquí o importa-la des d'un altre lloc
+import { fonts } from "../conts/fonts";
 
 export function Eines() {
   const { einesDisponibles, einaSeleccionada, setEinaSeleccionada } = useEinesStore();
-  const { colorEscollitTemporal, setColorEscollitTemporal } = usePlanejadorStore();
+  const { colorEscollitTemporal, setColorEscollitTemporal, setFontFamily } = usePlanejadorStore();
   const [ openColorPicker, setOpenColorPicker ] = useState(false);
 
 
@@ -38,6 +39,12 @@ export function Eines() {
   const handleColorClick = (color: string) => () => {
     setColorEscollitTemporal(color);
     setOpenColorPicker(false);
+    
+  };
+
+  const handleFontClick = (font: string) => () => {
+    setFontFamily(font);
+    setEinaSeleccionada(null);
     
   };
 
@@ -100,6 +107,56 @@ export function Eines() {
           </div>
         </div>
       )}
+      {/* Modal central per a l'eina "Tipografia" */}
+      {einaSeleccionada?.nom === "Tipografia" && (
+  <div
+    className="fixed inset-0 z-50 flex items-center justify-center bg-gray-200/5 backdrop-blur-sm"
+    role="dialog"
+    aria-modal="true"
+  >
+    <div
+      className="w-full max-w-md p-4 bg-slate-700 rounded shadow-lg max-h-[80vh] overflow-y-auto"
+      onClick={(e) => e.stopPropagation()}
+    >
+      <div className="flex items-center justify-between mb-3 sticky top-0 bg-slate-700 z-10 pb-2">
+        <div className="text-sm font-medium text-white">Tria la tipografia:</div>
+        <button
+          aria-label="Tanca"
+          onClick={() => {
+            setOpenColorPicker(false);
+            setEinaSeleccionada(null);
+          }}
+          className="text-gray-300 hover:text-white ml-2"
+          type="button"
+        >
+          ×
+        </button>
+      </div>
+
+      <div className="flex flex-col gap-2">
+        {fonts.map((font) => (
+          <button
+            key={font.name}
+            aria-label={`Selecciona ${font.name}`}
+            title={font.name}
+            onClick={handleFontClick(font.css)}
+            className={`w-full text-left px-4 py-2 rounded border transition-colors ${
+              colorEscollitTemporal === font.css
+                ? "ring-2 ring-offset-1 ring-blue-500"
+                : "hover:bg-slate-600"
+            }`}
+            style={{ fontFamily: font.css }}
+            type="button"
+          >
+            {font.name}
+          </button>
+        ))}
+      </div>
+    </div>
+  </div>
+)}
+
+      
     </div>
   );
 }

@@ -12,7 +12,7 @@ import { diesSetmana } from "../conts/dies-de-la-setmana";
 export function PlanejadorSetmanal() {
   const { hores, activitats, setActivitats, generaBackgroundColor } =
     usePlanejadorStore();
-  const { einaSeleccionada, setEinaSeleccionada } = useEinesStore();
+  const { einaSeleccionada} = useEinesStore();
   const { handleDividir, handleUnir } = useHours();
 
   const [hoveredHora, setHoveredHora] = useState<string | null>(null);
@@ -33,16 +33,14 @@ export function PlanejadorSetmanal() {
     if (einaSeleccionada) {
       if (einaSeleccionada.nom === "Parteix") {
         handleDividir(hora);
-        setEinaSeleccionada(null);
       } else if (einaSeleccionada.nom === "Fusiona") {
         handleUnir(hora);
-        setEinaSeleccionada(null);
       }
     }
   };
 
   return (
-    <div className="overflow-x-auto px-4 pb-14">
+    <div className="overflow-x-auto px-4 pb-14" id="taula-horari">
       <table className="w-full table-auto border-collapse mt-10 border border-gray-300">
         <thead>
           <RowHeader />
@@ -79,7 +77,7 @@ export function PlanejadorSetmanal() {
                 <td
                   className={`border p-2 font-medium cursor-pointer ${textColorClass} ${
                     esHoraActual
-                      ? "bg-red-200"
+                      ? "bg-slate-200"
                       : hoveredHora === hora
                       ? "bg-blue-100"
                       : ""
@@ -121,9 +119,6 @@ export function PlanejadorSetmanal() {
 
 /*
 Borrar els colors dels dies de la setmana
-Repasar formulari
-Afegir tipos com a eina
-Afegir validacions al formulari
-Afegir missatges d'error al formulari
+dom-to-image-more + jsPDF exportar pdf
 Afegir botó per esborrar tot el planificador amb confirmador
 */
