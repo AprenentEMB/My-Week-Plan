@@ -7,13 +7,14 @@ import { HoraHeader } from "./HoraHeader";
 
 export function RowHeader() {
   const { colorEscollitTemporal } = usePlanejadorStore();
-  const { einaSeleccionada, setEinaSeleccionada } = useEinesStore();
+  const { einaSeleccionada } = useEinesStore();
   const [diesBackgroundColor, setDiesBackgroundColor] = useState<{
     [dia: string]: string;
   }>({});
 
   const setColorDia = (dia: string, color: string) =>
     setDiesBackgroundColor((prev) => ({ ...prev, [dia]: color }));
+
 
   return (
     <tr>
@@ -31,7 +32,9 @@ export function RowHeader() {
             onClick={() => {
               if (einaSeleccionada?.nom === "Pinta" && colorEscollitTemporal) {
                 setColorDia(dia, colorEscollitTemporal);
-                setEinaSeleccionada(null);
+  
+              }else if (einaSeleccionada?.nom === "Goma") {
+                setColorDia(dia, "#1f2937");
               }
             }}
           >

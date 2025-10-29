@@ -11,12 +11,12 @@ import { ExportaPDFButton } from './components/ExportaPDFButton';
 
 function App() {
 
-  const { colorEscollitTemporal, setGeneraBackgroundColor, generaBackgroundColor, setColorEscollitTemporal, fontFamily} = usePlanejadorStore();
+  const { colorEscollitTemporal, setGeneralBackgroundColor, generalBackgroundColor, setColorEscollitTemporal, fontFamily} = usePlanejadorStore();
   const { einaSeleccionada, setEinaSeleccionada } = useEinesStore();
 
    const applyBackgroundIfSelected = () => {
     if (colorEscollitTemporal) {
-      setGeneraBackgroundColor(colorEscollitTemporal);
+      setGeneralBackgroundColor(colorEscollitTemporal);
       setColorEscollitTemporal("");
     }
   };
@@ -26,20 +26,28 @@ function App() {
    return (
     // clicant aquí fora aplicarà el color temporal com a background general
     <div
-      className="flex flex-col items-center min-h-screen"
-      style={{ background: generaBackgroundColor ?? undefined,
+      className="flex flex-col w-full px-4 sm:px-8 items-center min-h-screen"
+      style={{ background: generalBackgroundColor ?? undefined,
          fontFamily: fontFamily ?? undefined }}
       onClick={applyBackgroundIfSelected}
     >
+      <div className="w-full max-w-5xl flex justify-end mt-4">
+      
       {/* ─── Eines a la part superior ─── */}
-      <div className="mt-4" onClick={(e) => e.stopPropagation()}>
+      <div className="mt-4 w-full max-w-5xl" onClick={(e) => e.stopPropagation()}>
         <Eines />
+      </div>
+      <div className="ml-4">
+      <ExportaPDFButton targetId="taula-horari" fileName="HorariSetmanal.pdf" />
+      </div>
       </div>
 
       {/* ─── Taula del planificador ─── */}
-      <div className="ml-8" onClick={(e) => e.stopPropagation()}>
+      <div className="w-full max-w-5xl mt-6 flex flex-col items-center sm:ml-0" onClick={(e) => e.stopPropagation()}>
   <PlanejadorSetmanal />
-  <ExportaPDFButton targetId="taula-horari" fileName="HorariSetmanal.pdf" />
+  
+    
+ 
 </div>
       {/* ─── Formulari d'activitats─── */}
   {einaSeleccionada?.nom === 'Afegeix activitat' && (

@@ -10,12 +10,13 @@ import { textColorClassForBackground } from "../utils/text-color";
 import { diesSetmana } from "../conts/dies-de-la-setmana";
 
 export function PlanejadorSetmanal() {
-  const { hores, activitats, setActivitats, generaBackgroundColor } =
-    usePlanejadorStore();
+  const hores = usePlanejadorStore((state) => state.hores);
+const activitats = usePlanejadorStore((state) => state.activitats);
+const setActivitats = usePlanejadorStore((state) => state.setActivitats);
+const generalBackgroundColor = usePlanejadorStore((state) => state.generalBackgroundColor);
+
   const { einaSeleccionada} = useEinesStore();
   const { handleDividir, handleUnir } = useHours();
-
-  const [hoveredHora, setHoveredHora] = useState<string | null>(null);
   const [editant, setEditant] = useState<string | null>(null);
 
   const horaActual = useHoraActual({
@@ -23,6 +24,7 @@ export function PlanejadorSetmanal() {
     format: "HH:mm",
     locale: ca,
   });
+
 
   const començarEdicio = (clau: string) => setEditant(clau);
   const guardarEdicio = (clau: string, nouValor: string) => {
@@ -39,9 +41,18 @@ export function PlanejadorSetmanal() {
     }
   };
 
+
+
   return (
-    <div className="overflow-x-auto px-4 pb-14" id="taula-horari">
-      <table className="w-full table-auto border-collapse mt-10 border border-gray-300">
+    <div
+  id="taula-horari"
+  className="overflow-auto rounded-md shadow-lg p-6 pb-20 mb-3"
+
+  
+>
+      <table className="w-full table-auto border-collapse border border-gray-300 overflow-x-auto block sm:table"
+      style={{ backgroundColor: generalBackgroundColor }}>
+
         <thead>
           <RowHeader />
         </thead>
@@ -63,29 +74,33 @@ export function PlanejadorSetmanal() {
 
             const esHoraActual =
               actualEnMinuts >= horaEnMinuts && actualEnMinuts < nextEnMinuts;
+             
 
-            const cellBgHex = esHoraActual
-              ? "#fecaca"
-              : hoveredHora === hora
-              ? "#dbeafe"
-              : generaBackgroundColor ?? "#ffffff";
 
-            const textColorClass = textColorClassForBackground(cellBgHex);
+            const textColorClass = esHoraActual? 'text-slate-700' : textColorClassForBackground(generalBackgroundColor);
+
+            const horaClasses = [
+  'border',
+  'p-2',
+  'font-medium',
+  'cursor-pointer',
+  textColorClass, // variable externa
+  esHoraActual
+    ? 'bg-blue-100 border-blue-500 shadow-md text-slate-700'
+    : 'bg-transparent'
+].join(' ');
+
+
+           
 
             return (
               <tr key={hora} className="transition-colors duration-300">
                 <td
-                  className={`border p-2 font-medium cursor-pointer ${textColorClass} ${
-                    esHoraActual
-                      ? "bg-slate-200"
-                      : hoveredHora === hora
-                      ? "bg-blue-100"
-                      : ""
-                  }`}
+                  className={horaClasses}
+                 
+
                   onClick={() => handleJoinOrDivide(hora)}
-                  onMouseEnter={() => setHoveredHora(hora)}
-                  onMouseLeave={() => setHoveredHora(null)}
-                  title="Fes clic per aplicar l’eina seleccionada"
+  title="Fes clic per aplicar l’eina seleccionada"
                 >
                   {hora}
                 </td>
@@ -118,7 +133,17 @@ export function PlanejadorSetmanal() {
 
 
 /*
-Borrar els colors dels dies de la setmana
-dom-to-image-more + jsPDF exportar pdf
-Afegir botó per esborrar tot el planificador amb confirmador
+
+Que quan toquis A QUALSEVOL PUNT DEL FONS ES PINTI
+
+Acabar d'explicar utilitats com que es marca la hora actual i que es pot desplaçar les hores amb les fletxes
+
+Poder activar o desactivar la visualització de la hora actual
+
+Fer que reaccioni al bg tambe els bordes de les celes o que sempre sigui visible
+
+al formulari si poses una hora de començar que automaticament et posi la de final 1 hora després
+
+Afegir Animacions a les files i cel·les quan canvia el color de fons o quan es fusionen o divideixen les celes o les hores 
+
 */

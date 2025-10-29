@@ -29,12 +29,24 @@ export function useHours() {
       return;
     }
     // Si SÍ existeix, segueix la lògica original de quarts/mitges hores
-    else if (!hores.includes(novaHora30minuts)) {
+    else if (!hores.includes(novaHora30minuts) && !hores.includes(novaHora15minuts)) {
       noveshores.splice(index + 1, 0, novaHora30minuts);
+      setHores(noveshores);
+      return;
+    } else if (hores.includes(novaHora15minuts) && !hores.includes(novaHora30minuts)) {
+      noveshores.splice(index + 2, 0, novaHora30minuts);
       setHores(noveshores);
       return;
     }
   }
+
+ if(hora.endsWith(':15')) {
+    // Si NO existeix la següent mitja hora → afegeix-la
+    if (!hores.includes(novaHora30minuts)) {
+      noveshores.splice(index + 1, 0, novaHora30minuts);
+      setHores(noveshores);
+      return;
+    }}
 
   // 🔹 Si no és una hora sencera, continua amb la lògica habitual
   if (!hores.includes(novaHora15minuts) && !hora.endsWith(':30') && !hora.endsWith(':45')) {

@@ -17,7 +17,7 @@ export function Cella({
   començarEdicio: (clau: string) => void;
   guardarEdicio: (clau: string, nouValor: string) => void;
 }) {
-  const { hores, cellaFusionada, setCellaFusionada, cellsBackgroundsColor, setCellsBackgroundsColor, colorEscollitTemporal, generaBackgroundColor } =
+  const { hores, cellaFusionada, setCellaFusionada, cellsBackgroundsColor, setCellsBackgroundsColor, colorEscollitTemporal, generalBackgroundColor } =
     usePlanejadorStore();
   const { einaSeleccionada } = useEinesStore();
   const [localValor, setLocalValor] = useState(valor);
@@ -40,7 +40,7 @@ export function Cella({
   const rowSpan = esSuperiorFusionada ? fusio.files : 1;
 
   const cellBgColor = cellsBackgroundsColor?.[clau];
-  const effectiveBg = cellBgColor ?? generaBackgroundColor ?? "#ffffff";
+  const effectiveBg = cellBgColor ?? generalBackgroundColor ?? "#ffffff";
   const textClass = textColorClassForBackground(effectiveBg);
 
   const handleClick = () => {
@@ -113,7 +113,7 @@ export function Cella({
     >
       {estaEditant ? (
         <input
-          className={`w-full text-center border-none focus:ring-2 focus:ring-blue-400 ${textClass}`}
+          className={`w-full text-center border-none focus:ring-2 focus:ring-blue-400 text-${textClass}`}
           value={localValor}
           onChange={(e) => setLocalValor(e.target.value)}
           onBlur={() => guardarEdicio(clau, localValor)}

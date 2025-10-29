@@ -1,18 +1,16 @@
-// ExportaPDFButton.tsx
 import React from "react";
 import domtoimage from "dom-to-image-more";
 import jsPDF from "jspdf";
 
-interface ExportaPDFButtonProps {
-  targetId: string; // id del div/taula que vols exportar
+type ExportaPDFButtonProps = {
+  targetId: string;
   fileName?: string;
-}
+};
 
 export const ExportaPDFButton: React.FC<ExportaPDFButtonProps> = ({
   targetId,
   fileName = "taula.pdf",
 }) => {
-
   const handleExport = async () => {
     const node = document.getElementById(targetId);
     if (!node) {
@@ -21,35 +19,72 @@ export const ExportaPDFButton: React.FC<ExportaPDFButtonProps> = ({
     }
 
     try {
-      // Convertim el node DOM a PNG
-      const dataUrl = await domtoimage.toPng(node, {
-        quality: 1,
-        bgcolor: "#ffffff", // fons blanc si vols
-        // opcional: width, height, style, filter, etc.
-      });
+      // Captura la taula
+      const dataUrl = await domtoimage.toPng(node, { quality: 1, bgcolor: "#fff" });
 
-      // Creem un PDF amb jsPDF
-      const pdf = new jsPDF({
-        orientation: "landscape", // o 'portrait'
-        unit: "px",
-        format: [node.offsetWidth, node.offsetHeight],
-      });
+      const img = new Image();
+      img.src = dataUrl;
+      img.onload = () => {
+        const pdf = new jsPDF({
+          orientation: "landscape",
+          unit: "px",
+          format: "a4",
+        });
 
-      pdf.addImage(dataUrl, "PNG", 0, 0, node.offsetWidth, node.offsetHeight);
-      pdf.save(fileName);
-    } catch (error) {
-      console.error("Error exportant PDF:", error);
+        const pageWidth = pdf.internal.pageSize.getWidth();
+        const pageHeight = pdf.internal.pageSize.getHeight();
+        const margin = 20;
+
+        // Escala proporcional segons la dimensió més restrictiva
+        const ratio = Math.min(
+          (pageWidth - 2 * margin) / img.width,
+          (pageHeight - 2 * margin) / img.height
+        );
+
+        const imgWidth = img.width * ratio;
+        const imgHeight = img.height * ratio;
+
+        // Afegeix la imatge escalada al PDF amb marge
+        pdf.addImage(img, "PNG", margin, margin, imgWidth, imgHeight);
+
+        pdf.save(fileName);
+      };
+    } catch (err) {
+      console.error("Error exportant PDF:", err);
     }
   };
 
   return (
     <button
-      onClick={handleExport}
-      className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
-    >
-      Exporta PDF
-    </button>
+  onClick={handleExport}
+  className="flex items-center gap-2 px-4 py-2 bg-sky-600 text-white font-semibold rounded-lg shadow-md hover:bg-sky-700 hover:shadow-lg transition-all duration-200"
+>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    className="h-5 w-5"
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
+    strokeWidth={2}
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M12 4v16m8-8H4"
+    />
+  </svg>
+  Exporta PDF
+</button>
+
   );
 };
+
+
+
+
+
+
+
+
 
 

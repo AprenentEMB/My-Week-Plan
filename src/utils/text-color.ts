@@ -42,6 +42,6 @@ export function isDark(input?: string) {
 
 // retorna classe Tailwind per al text segons fons
 export function textColorClassForBackground(input?: string) {
-  return isDark(input) ? "text-white" : "text-gray-900";
+  return isDark(input) ? "text-white" : "text-gray-800";
 }
 // ...existing code...
