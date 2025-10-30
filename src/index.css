@@ -1,9 +1,19 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Roboto:wght@400;500;700&family=Open+Sans:wght@400;600&family=Poppins:wght@400;500;700&family=Lato:wght@400;700&family=Montserrat:wght@400;600;700&family=Nunito:wght@400;600&family=Merriweather:wght@400;700&family=Playfair+Display:wght@400;600;700&family=Crimson+Text:wght@400;700&family=Raleway:wght@400;600&family=Oswald:wght@400;500;700&family=Dancing+Script:wght@400;700&family=Pacifico&family=Shadows+Into+Light&family=Fira+Code:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap');
 
 :root {
-  font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-    Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family:
+    Inter,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    'Open Sans',
+    'Helvetica Neue',
+    sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -16,4 +26,3 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-

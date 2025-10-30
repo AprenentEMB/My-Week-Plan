@@ -6,9 +6,15 @@ export function parseColor(input?: string): RGB | null {
   if (!input) return null;
   const s = input.trim();
   // hex
-  if (s[0] === "#") {
+  if (s[0] === '#') {
     const h = s.slice(1);
-    const full = h.length === 3 ? h.split("").map((c) => c + c).join("") : h;
+    const full =
+      h.length === 3
+        ? h
+            .split('')
+            .map(c => c + c)
+            .join('')
+        : h;
     const r = parseInt(full.slice(0, 2), 16);
     const g = parseInt(full.slice(2, 4), 16);
     const b = parseInt(full.slice(4, 6), 16);
@@ -42,6 +48,6 @@ export function isDark(input?: string) {
 
 // retorna classe Tailwind per al text segons fons
 export function textColorClassForBackground(input?: string) {
-  return isDark(input) ? "text-white" : "text-gray-800";
+  return isDark(input) ? 'text-white' : 'text-gray-800';
 }
 // ...existing code...

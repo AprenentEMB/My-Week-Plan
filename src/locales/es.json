@@ -1,0 +1,17 @@
+{
+  "title": "Planificador semanal",
+  "tools": {
+    "leaveTool": "Deja la herramienta",
+    "cut": "Corta",
+    "merge": "Fusiona",
+    "erase": "Goma",
+    "font": "Tipografía",
+    "paint": "Pinta",
+    "addActivity": "Añadir actividad",
+    "undo": "Deshacer",
+    "redo": "Rehacer",
+    "reset": "Reiniciar",
+    "howItWorks": "¿Cómo funciona?",
+    "clock": "Reloj"
+  }
+}

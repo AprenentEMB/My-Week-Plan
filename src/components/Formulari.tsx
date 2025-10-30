@@ -1,7 +1,7 @@
-import { useState } from "react";
-import { usePlanejadorStore } from "../stores/store";
-import { useEinesStore } from "../stores/storeEines";
-import { diesSetmana } from "../conts/dies-de-la-setmana";
+import { useState, useEffect } from 'react';
+import { usePlanejadorStore } from '../stores/store';
+import { useEinesStore } from '../stores/storeEines';
+import { diesSetmana } from '../const/dies-de-la-setmana';
 
 export function FormulariActivitat() {
   const { hores, setActivitats } = usePlanejadorStore();
@@ -10,7 +10,18 @@ export function FormulariActivitat() {
   const [diesSeleccionats, setDiesSeleccionats] = useState<string[]>([]);
   const [horaInici, setHoraInici] = useState<string>(hores[0]);
   const [horaFi, setHoraFi] = useState<string>(hores[1]);
-  const [activitat, setActivitat] = useState<string>("");
+  const [activitat, setActivitat] = useState<string>('');
+
+  useEffect(() => {
+    const indexInici = hores.indexOf(horaInici);
+    const indexFi = hores.indexOf(horaFi);
+
+    // Si l'hora de fi és abans o igual que la d'inici, la posem una hora més tard
+    if (indexFi <= indexInici && indexInici < hores.length - 1) {
+      setHoraFi(hores[indexInici + 1]);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [horaInici, hores]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -24,12 +35,12 @@ export function FormulariActivitat() {
     }
 
     if (diesSeleccionats.length === 0) {
-      alert("Selecciona almenys un dia!");
+      alert('Selecciona almenys un dia!');
       return;
     }
 
     // Afegeix l’activitat a cada dia seleccionat i cada hora dins l’interval
-    diesSeleccionats.forEach((dia) => {
+    diesSeleccionats.forEach(dia => {
       for (let i = indexInici; i < indexFi; i++) {
         const clau = `${dia}-${hores[i]}`;
         setActivitats(clau, activitat);
@@ -38,15 +49,13 @@ export function FormulariActivitat() {
 
     // Reinicia estat
     setEinaSeleccionada(null);
-    setActivitat("");
+    setActivitat('');
     setDiesSeleccionats([]);
   };
 
   const toggleDia = (dia: string) => {
-    setDiesSeleccionats((prev) =>
-      prev.includes(dia)
-        ? prev.filter((d) => d !== dia)
-        : [...prev, dia]
+    setDiesSeleccionats(prev =>
+      prev.includes(dia) ? prev.filter(d => d !== dia) : [...prev, dia]
     );
   };
 
@@ -57,40 +66,40 @@ export function FormulariActivitat() {
     >
       {/* Dies de la setmana */}
       <div className="flex flex-col">
-  <label className="text-sm font-medium mb-1">Dies</label>
-  <div className="flex flex-wrap gap-2 md:gap-3">
-    {diesSetmana.map((d) => (
-      <label
-        key={d}
-        className={`flex items-center justify-center gap-2 px-3 py-1 md:px-4 md:py-2 rounded cursor-pointer transition-all text-sm md:text-base
-          ${diesSeleccionats.includes(d)
-            ? "bg-blue-600 text-white"
-            : "bg-gray-200 text-gray-800 hover:bg-gray-300"
+        <label className="text-sm font-medium mb-1">Dies</label>
+        <div className="flex flex-wrap gap-2 md:gap-3">
+          {diesSetmana.map(d => (
+            <label
+              key={d}
+              className={`flex items-center justify-center gap-2 px-3 py-1 md:px-4 md:py-2 rounded cursor-pointer transition-all text-sm md:text-base
+          ${
+            diesSeleccionats.includes(d)
+              ? 'bg-blue-600 text-white'
+              : 'bg-gray-200 text-gray-800 hover:bg-gray-300'
           }`}
-      >
-        <input
-          type="checkbox"
-          value={d}
-          checked={diesSeleccionats.includes(d)}
-          onChange={() => toggleDia(d)}
-          className="hidden"
-        />
-        {d}
-      </label>
-    ))}
-  </div>
-</div>
-
+            >
+              <input
+                type="checkbox"
+                value={d}
+                checked={diesSeleccionats.includes(d)}
+                onChange={() => toggleDia(d)}
+                className="hidden"
+              />
+              {d}
+            </label>
+          ))}
+        </div>
+      </div>
 
       {/* Hora inici */}
       <div className="flex flex-col">
         <label className="text-sm font-medium mb-1">Des de</label>
         <select
           value={horaInici}
-          onChange={(e) => setHoraInici(e.target.value)}
+          onChange={e => setHoraInici(e.target.value)}
           className="border p-2 rounded"
         >
-          {hores.map((h) => (
+          {hores.map(h => (
             <option key={h} value={h}>
               {h}
             </option>
@@ -103,10 +112,10 @@ export function FormulariActivitat() {
         <label className="text-sm font-medium mb-1">Fins</label>
         <select
           value={horaFi}
-          onChange={(e) => setHoraFi(e.target.value)}
+          onChange={e => setHoraFi(e.target.value)}
           className="border p-2 rounded"
         >
-          {hores.map((h) => (
+          {hores.map(h => (
             <option key={h} value={h}>
               {h}
             </option>
@@ -120,7 +129,7 @@ export function FormulariActivitat() {
         <input
           type="text"
           value={activitat}
-          onChange={(e) => setActivitat(e.target.value)}
+          onChange={e => setActivitat(e.target.value)}
           placeholder="Escriu l'activitat..."
           className="border p-2 rounded w-full"
         />
@@ -135,6 +144,3 @@ export function FormulariActivitat() {
     </form>
   );
 }
-
-
-

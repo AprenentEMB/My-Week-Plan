@@ -1,0 +1,17 @@
+{
+  "title": "Weekly Planner",
+  "tools": {
+    "leaveTool": "Leave tool",
+    "cut": "Cut",
+    "merge": "Merge",
+    "erase": "Eraser",
+    "font": "Typography",
+    "paint": "Paint",
+    "addActivity": "Add activity",
+    "undo": "Undo",
+    "redo": "Redo",
+    "reset": "Reset",
+    "howItWorks": "How it works?",
+    "clock": "Clock"
+  }
+}

@@ -1,6 +1,6 @@
-import React from "react";
-import domtoimage from "dom-to-image-more";
-import jsPDF from "jspdf";
+import React from 'react';
+import domtoimage from 'dom-to-image-more';
+import jsPDF from 'jspdf';
 
 type ExportaPDFButtonProps = {
   targetId: string;
@@ -9,7 +9,7 @@ type ExportaPDFButtonProps = {
 
 export const ExportaPDFButton: React.FC<ExportaPDFButtonProps> = ({
   targetId,
-  fileName = "taula.pdf",
+  fileName = 'taula.pdf',
 }) => {
   const handleExport = async () => {
     const node = document.getElementById(targetId);
@@ -20,15 +20,15 @@ export const ExportaPDFButton: React.FC<ExportaPDFButtonProps> = ({
 
     try {
       // Captura la taula
-      const dataUrl = await domtoimage.toPng(node, { quality: 1, bgcolor: "#fff" });
+      const dataUrl = await domtoimage.toPng(node, { quality: 1, bgcolor: '#fff' });
 
       const img = new Image();
       img.src = dataUrl;
       img.onload = () => {
         const pdf = new jsPDF({
-          orientation: "landscape",
-          unit: "px",
-          format: "a4",
+          orientation: 'landscape',
+          unit: 'px',
+          format: 'a4',
         });
 
         const pageWidth = pdf.internal.pageSize.getWidth();
@@ -45,46 +45,31 @@ export const ExportaPDFButton: React.FC<ExportaPDFButtonProps> = ({
         const imgHeight = img.height * ratio;
 
         // Afegeix la imatge escalada al PDF amb marge
-        pdf.addImage(img, "PNG", margin, margin, imgWidth, imgHeight);
+        pdf.addImage(img, 'PNG', margin, margin, imgWidth, imgHeight);
 
         pdf.save(fileName);
       };
     } catch (err) {
-      console.error("Error exportant PDF:", err);
+      console.error('Error exportant PDF:', err);
     }
   };
 
   return (
     <button
-  onClick={handleExport}
-  className="flex items-center gap-2 px-4 py-2 bg-sky-600 text-white font-semibold rounded-lg shadow-md hover:bg-sky-700 hover:shadow-lg transition-all duration-200"
->
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    className="h-5 w-5"
-    fill="none"
-    viewBox="0 0 24 24"
-    stroke="currentColor"
-    strokeWidth={2}
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      d="M12 4v16m8-8H4"
-    />
-  </svg>
-  Exporta PDF
-</button>
-
+      onClick={handleExport}
+      className="flex items-center gap-1 px-2 py-1 bg-sky-800 text-white font-semibold rounded-lg shadow-md hover:bg-sky-700 hover:shadow-lg transition-all duration-200"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        className="h-5 w-5"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        strokeWidth={2}
+      >
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
+      </svg>
+      Exporta PDF
+    </button>
   );
 };
-
-
-
-
-
-
-
-
-
-

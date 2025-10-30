@@ -1,8 +1,7 @@
-import { useState} from "react";
-import { usePlanejadorStore } from "../stores/store";
-import { useEinesStore } from "../stores/storeEines";
-import { textColorClassForBackground } from "../utils/text-color";
-
+import { useState } from 'react';
+import { usePlanejadorStore } from '../stores/store';
+import { useEinesStore } from '../stores/storeEines';
+import { textColorClassForBackground, isDark } from '../utils/text-color';
 
 export function Cella({
   clau,
@@ -17,22 +16,33 @@ export function Cella({
   començarEdicio: (clau: string) => void;
   guardarEdicio: (clau: string, nouValor: string) => void;
 }) {
-  const { hores, cellaFusionada, setCellaFusionada, cellsBackgroundsColor, setCellsBackgroundsColor, colorEscollitTemporal, generalBackgroundColor } =
-    usePlanejadorStore();
+  const {
+    hores,
+    cellaFusionada,
+    setCellaFusionada,
+    cellsBackgroundsColor,
+    setCellsBackgroundsColor,
+    colorEscollitTemporal,
+    generalBackgroundColor,
+  } = usePlanejadorStore();
   const { einaSeleccionada } = useEinesStore();
   const [localValor, setLocalValor] = useState(valor);
 
-  const [dia, hora] = clau.split("-");
+  const [dia, hora] = clau.split('-');
   const idx = hores.indexOf(hora);
 
   // 🔹 Fusió múltiple
-  const fusio = cellaFusionada.find((f) => f.superior === clau);
+  const fusio = cellaFusionada.find(f => f.superior === clau);
   const esSuperiorFusionada = !!fusio;
 
-  const esInferiorFusionada = cellaFusionada.some((f) => {
-    const idxSuperior = hores.indexOf(f.superior.split("-")[1]);
+  const esInferiorFusionada = cellaFusionada.some(f => {
+    const idxSuperior = hores.indexOf(f.superior.split('-')[1]);
     const idxActual = hores.indexOf(hora);
-    return dia === f.superior.split("-")[0] && idxActual > idxSuperior && idxActual < idxSuperior + f.files;
+    return (
+      dia === f.superior.split('-')[0] &&
+      idxActual > idxSuperior &&
+      idxActual < idxSuperior + f.files
+    );
   });
 
   if (esInferiorFusionada) return null;
@@ -40,7 +50,7 @@ export function Cella({
   const rowSpan = esSuperiorFusionada ? fusio.files : 1;
 
   const cellBgColor = cellsBackgroundsColor?.[clau];
-  const effectiveBg = cellBgColor ?? generalBackgroundColor ?? "#ffffff";
+  const effectiveBg = cellBgColor ?? generalBackgroundColor ?? '#ffffff';
   const textClass = textColorClassForBackground(effectiveBg);
 
   const handleClick = () => {
@@ -50,9 +60,9 @@ export function Cella({
     }
 
     switch (einaSeleccionada.nom) {
-      case "Fusiona":
+      case 'Fusiona':
         if (fusio) {
-          const noves = cellaFusionada.map((f) =>
+          const noves = cellaFusionada.map(f =>
             f.superior === clau ? { ...f, files: f.files + 1 } : f
           );
           setCellaFusionada(noves);
@@ -61,15 +71,11 @@ export function Cella({
         }
         break;
 
-      case "Parteix":
-        setCellaFusionada(
-          cellaFusionada.filter(
-            (f) => f.superior !== clau && !esInferiorFusionada
-          )
-        );
+      case 'Parteix':
+        setCellaFusionada(cellaFusionada.filter(f => f.superior !== clau && !esInferiorFusionada));
         break;
 
-      case "Pinta":
+      case 'Pinta':
         if (colorEscollitTemporal) {
           // pinta també cel·les fusionades
           if (esSuperiorFusionada) {
@@ -83,17 +89,17 @@ export function Cella({
         }
         break;
 
-      case "Goma":
+      case 'Goma':
         // elimina el text
-        guardarEdicio(clau, "");
+        guardarEdicio(clau, '');
         // elimina el color de fons
         if (esSuperiorFusionada) {
           for (let i = 0; i < rowSpan; i++) {
             const clauBaixa = `${dia}-${hores[idx + i]}`;
-            setCellsBackgroundsColor(clauBaixa, "");
+            setCellsBackgroundsColor(clauBaixa, '');
           }
         } else {
-          setCellsBackgroundsColor(clau, "");
+          setCellsBackgroundsColor(clau, '');
         }
         break;
 
@@ -102,10 +108,12 @@ export function Cella({
     }
   };
 
+  const colorPerElsBordes = isDark(effectiveBg) ? '#FFFFFF' : '#000000';
+
   return (
     <td
       rowSpan={rowSpan}
-      className={`border border-gray-300 p-2 text-center cursor-pointer hover:bg-gray-100 ${
+      className={`border border-${colorPerElsBordes} p-2 text-center cursor-pointer hover:bg-gray-100 ${
         textClass
       }`}
       style={cellBgColor ? { background: cellBgColor } : {}}
@@ -115,11 +123,11 @@ export function Cella({
         <input
           className={`w-full text-center border-none focus:ring-2 focus:ring-blue-400 text-${textClass}`}
           value={localValor}
-          onChange={(e) => setLocalValor(e.target.value)}
+          onChange={e => setLocalValor(e.target.value)}
           onBlur={() => guardarEdicio(clau, localValor)}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") guardarEdicio(clau, localValor);
-            if (e.key === "Escape") setLocalValor(valor);
+          onKeyDown={e => {
+            if (e.key === 'Enter') guardarEdicio(clau, localValor);
+            if (e.key === 'Escape') setLocalValor(valor);
           }}
           autoFocus
         />
@@ -129,6 +137,3 @@ export function Cella({
     </td>
   );
 }
-
-
-

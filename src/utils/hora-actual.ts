@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
-import { formatInTimeZone } from "date-fns-tz";
-import type { Locale } from "date-fns";
+import { useState, useEffect } from 'react';
+import { formatInTimeZone } from 'date-fns-tz';
+import type { Locale } from 'date-fns';
 
 type Options = {
   intervalMs?: number;
@@ -12,8 +12,8 @@ type Options = {
  * Retorna una string amb l'hora actual actualitzada cada `intervalMs`.
  * Per defecte format "HH:mm" i interval 15000ms.
  */
-export function useHoraActual({ intervalMs = 15000, format = "HH:mm", locale }: Options = {}) {
-  const [hora, setHora] = useState<string>("");
+export function useHoraActual({ intervalMs = 15000, format = 'HH:mm', locale }: Options = {}) {
+  const [hora, setHora] = useState<string>('');
 
   useEffect(() => {
     const update = () => {

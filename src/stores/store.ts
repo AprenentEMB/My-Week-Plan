@@ -1,5 +1,5 @@
-import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 
 interface Fusio {
   superior: string;
@@ -14,7 +14,7 @@ interface PlanejadorState {
   fontFamily: string;
   cellsBackgroundsColor: Record<string, string>;
   colorEscollitTemporal?: string;
-
+  rellotgeActiu?: boolean;
   pastStates: Partial<PlanejadorState>[];
   futureStates: Partial<PlanejadorState>[];
 
@@ -27,6 +27,7 @@ interface PlanejadorState {
   setColorEscollitTemporal: (color: string) => void;
   setFontFamily: (font: string) => void;
   setResetPlanejador: () => void;
+  setRellotgeActiu: (actiu: boolean) => void;
 
   // Undo/redo
   setStateSnapshot: (newState: Partial<PlanejadorState>) => void;
@@ -38,14 +39,15 @@ export const usePlanejadorStore = create<PlanejadorState>()(
   persist(
     (set, get) => ({
       activitats: {},
-      hores: Array.from({ length: 24 }, (_, i) => `${String((i + 7) % 24).padStart(2, "0")}:00`),
+      hores: Array.from({ length: 24 }, (_, i) => `${String((i + 7) % 24).padStart(2, '0')}:00`),
       cellaFusionada: [],
-      generalBackgroundColor: "white",
-      fontFamily: "Arial, sans-serif",
+      generalBackgroundColor: 'white',
+      fontFamily: 'Arial, sans-serif',
       cellsBackgroundsColor: {},
       colorEscollitTemporal: undefined,
       pastStates: [],
       futureStates: [],
+      rellotgeActiu: false,
 
       // Funcions
       setActivitats: (clau, valor) => {
@@ -53,17 +55,17 @@ export const usePlanejadorStore = create<PlanejadorState>()(
         set({ activitats: { ...get().activitats, [clau]: valor } });
       },
 
-      setHores: (hores) => {
+      setHores: hores => {
         get().setStateSnapshot({ hores });
         set({ hores });
       },
 
-      setCellaFusionada: (fusions) => {
+      setCellaFusionada: fusions => {
         get().setStateSnapshot({ cellaFusionada: fusions });
         set({ cellaFusionada: fusions });
       },
 
-      setGeneralBackgroundColor: (color) => {
+      setGeneralBackgroundColor: color => {
         get().setStateSnapshot({ generalBackgroundColor: color });
         set({ generalBackgroundColor: color });
       },
@@ -74,34 +76,48 @@ export const usePlanejadorStore = create<PlanejadorState>()(
         set({ cellsBackgroundsColor: newColors });
       },
 
-      setColorEscollitTemporal: (color) => set({ colorEscollitTemporal: color }),
-      setFontFamily: (font) => set({ fontFamily: font }),
+      setColorEscollitTemporal: color => set({ colorEscollitTemporal: color }),
+      setFontFamily: font => set({ fontFamily: font }),
 
       setResetPlanejador: () => {
         get().setStateSnapshot({
           activitats: {},
-          hores: Array.from({ length: 24 }, (_, i) => `${String((i + 7) % 24).padStart(2, "0")}:00`),
+          hores: Array.from(
+            { length: 24 },
+            (_, i) => `${String((i + 7) % 24).padStart(2, '0')}:00`
+          ),
           cellaFusionada: [],
-          generalBackgroundColor: "white",
-          fontFamily: "Arial, sans-serif",
+          generalBackgroundColor: 'white',
+          fontFamily: 'Arial, sans-serif',
           cellsBackgroundsColor: {},
           colorEscollitTemporal: undefined,
         });
 
         set({
           activitats: {},
-          hores: Array.from({ length: 24 }, (_, i) => `${String((i + 7) % 24).padStart(2, "0")}:00`),
+          hores: Array.from(
+            { length: 24 },
+            (_, i) => `${String((i + 7) % 24).padStart(2, '0')}:00`
+          ),
           cellaFusionada: [],
-          generalBackgroundColor: "white",
-          fontFamily: "Arial, sans-serif",
+          generalBackgroundColor: 'white',
+          fontFamily: 'Arial, sans-serif',
           cellsBackgroundsColor: {},
           colorEscollitTemporal: undefined,
         });
       },
 
       // Undo/redo
-      setStateSnapshot: (newState) => {
-        const { activitats, hores, cellaFusionada, generalBackgroundColor, fontFamily, cellsBackgroundsColor, pastStates } = get();
+      setStateSnapshot: newState => {
+        const {
+          activitats,
+          hores,
+          cellaFusionada,
+          generalBackgroundColor,
+          fontFamily,
+          cellsBackgroundsColor,
+          pastStates,
+        } = get();
 
         const snapshot: Partial<PlanejadorState> = {
           activitats,
@@ -142,7 +158,9 @@ export const usePlanejadorStore = create<PlanejadorState>()(
           futureStates: futureStates.slice(1),
         });
       },
+
+      setRellotgeActiu: (actiu: boolean) => set({ rellotgeActiu: actiu }),
     }),
-    { name: "planejador-storage" }
+    { name: 'planejador-storage' }
   )
 );

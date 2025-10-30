@@ -1,0 +1,17 @@
+{
+  "title": "Planificador setmanal",
+  "tools": {
+    "leaveTool": "Deixa l'eina",
+    "cut": "Parteix",
+    "merge": "Fusiona",
+    "erase": "Goma",
+    "font": "Tipografia",
+    "paint": "Pinta",
+    "addActivity": "Afegeix activitat",
+    "undo": "Desfés",
+    "redo": "Refés",
+    "reset": "Reinicia",
+    "howItWorks": "Com funciona?",
+    "clock": "Rellotge"
+  }
+}

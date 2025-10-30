@@ -1,5 +1,5 @@
-import { ArrowDownIcon, ArrowUpIcon } from "../icons/icons";
-import { usePlanejadorStore } from "../stores/store";
+import { ArrowDownIcon, ArrowUpIcon } from '../icons/icons';
+import { usePlanejadorStore } from '../stores/store';
 
 export function HoraHeader() {
   const { hores, setHores } = usePlanejadorStore();
