@@ -1,8 +1,10 @@
 import { ArrowDownIcon, ArrowUpIcon } from '../icons/icons';
 import { usePlanejadorStore } from '../stores/store';
+import { useTranslation } from 'react-i18next';
 
 export function HoraHeader() {
   const { hores, setHores } = usePlanejadorStore();
+  const { t } = useTranslation();
 
   const tirarHoraAvall = () => {
     const novesHores = [...hores];
@@ -31,7 +33,7 @@ export function HoraHeader() {
         >
           <ArrowUpIcon />
         </button>
-        Hora
+        {t('hours')}
         <button
           className="flex items-center mx-auto rounded-full p-1 hover:bg-gray-700"
           onClick={tirarHoraAvall}

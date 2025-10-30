@@ -1,17 +1,96 @@
 {
-  "title": "Planificador semanal",
+  "title": "Planificador Semanal",
   "tools": {
-    "leaveTool": "Deja la herramienta",
-    "cut": "Corta",
-    "merge": "Fusiona",
+    "leaveTool": "Dejar herramienta",
+    "cut": "Dividir",
+    "merge": "Fusionar",
     "erase": "Goma",
     "font": "Tipografía",
-    "paint": "Pinta",
+    "paint": "Pintar",
     "addActivity": "Añadir actividad",
     "undo": "Deshacer",
     "redo": "Rehacer",
     "reset": "Reiniciar",
     "howItWorks": "¿Cómo funciona?",
     "clock": "Reloj"
+  },
+  "days": {
+    "monday": "Lunes",
+    "tuesday": "Martes",
+    "wednesday": "Miércoles",
+    "thursday": "Jueves",
+    "friday": "Viernes",
+    "saturday": "Sábado",
+    "sunday": "Domingo"
+  },
+  "form": {
+    "activityName": "Nombre de la actividad",
+    "startTime": "Hora de inicio",
+    "endTime": "Hora de finalización",
+    "color": "Color",
+    "addActivity": "Añadir Actividad",
+    "cancel": "Cancelar"
+  },
+  "howItWorks": {
+    "title": "Cómo funciona el Planificador Semanal",
+    "intro": "¡Bienvenido al Planificador Semanal! Esta herramienta te permite organizar tus actividades semanales de manera visual y personalizada.",
+    "toolsTitle": "Explicación de las herramientas:",
+    "tools": {
+      "split": {
+        "title": "Dividir",
+        "desc": "Permite dividir las horas en cuartos o medias horas, o volver a dividir celdas que habías fusionado."
+      },
+      "merge": {
+        "title": "Fusionar",
+        "desc": "Sirve para fusionar horas o celdas con actividades, creando agrupaciones visuales. Puedes fusionar tantas celdas como necesites."
+      },
+      "erase": {
+        "title": "Goma",
+        "desc": "Borra actividades y colores aplicados a las celdas. Solo haz clic en la celda que quieras limpiar."
+      },
+      "font": {
+        "title": "Tipografía",
+        "desc": "Cambia la fuente general del planificador seleccionando esta herramienta y eligiendo la tipografía deseada."
+      },
+      "paint": {
+        "title": "Pintar",
+        "desc": "Permite aplicar colores a celdas, días de la semana o al fondo si haces clic fuera de la tabla. Puedes pintar tantas celdas como quieras hasta que dejes la herramienta."
+      },
+      "addActivity": {
+        "title": "Añadir Actividad",
+        "desc": "Abre un formulario para añadir actividades de manera más eficiente, aunque también puedes escribir directamente en la celda haciendo clic en ella."
+      },
+      "leaveTool": {
+        "title": "Dejar herramienta",
+        "desc": "Sirve exactamente para dejar de usar la herramienta activa y volver a la selección normal."
+      },
+      "undo": {
+        "title": "Deshacer",
+        "desc": "Vuelve al estado anterior del planificador."
+      },
+      "redo": {
+        "title": "Rehacer",
+        "desc": "Restaura la última acción deshecha."
+      },
+      "reset": {
+        "title": "Reiniciar",
+        "desc": "Reinicia completamente el planificador. Aparecerá un mensaje de confirmación, y si confirmas, el horario volverá a su estado inicial (vacío)."
+      },
+      "moveHours": {
+        "title": "Mover horas",
+        "desc": "Puedes mover las horas hacia arriba o hacia abajo utilizando las flechas junto a cada hora."
+      }
+    },
+    "outro": "¡Esperamos que estas herramientas te ayuden a organizar mejor tu semana de manera visual y sencilla!",
+    "close": "Cerrar"
+  },
+  "hours": "Horas",
+  "Exporta PDF": "Exportar PDF",
+  "resetConfirmation": {
+    "title": "Confirmar reinicio",
+    "message": "¿Estás seguro de que quieres reiniciar el planificador? Esta acción no se puede deshacer.",
+    "cancel": "Cancelar",
+    "confirm": "Reiniciar"
   }
 }
+

@@ -4,8 +4,10 @@ import { textColorClassForBackground } from '../utils/text-color';
 import { usePlanejadorStore } from '../stores/store';
 import { useEinesStore } from '../stores/storeEines';
 import { HoraHeader } from './HoraHeader';
+import { useTranslation } from 'react-i18next';
 
 export function RowHeader() {
+  const { t } = useTranslation();
   const { colorEscollitTemporal } = usePlanejadorStore();
   const { einaSeleccionada } = useEinesStore();
   const [diesBackgroundColor, setDiesBackgroundColor] = useState<{
@@ -29,14 +31,14 @@ export function RowHeader() {
             className={`w-40 min-w-[120px] border border-gray-300 p-2 text-center ${textClass}`}
             style={{ background: bg }}
             onClick={() => {
-              if (einaSeleccionada?.nom === 'Pinta' && colorEscollitTemporal) {
+              if (einaSeleccionada?.id === 'paint' && colorEscollitTemporal) {
                 setColorDia(dia, colorEscollitTemporal);
-              } else if (einaSeleccionada?.nom === 'Goma') {
+              } else if (einaSeleccionada?.id === 'erase') {
                 setColorDia(dia, '#1f2937');
               }
             }}
           >
-            {dia}
+            {t(`days.${dia.toLowerCase()}`)}
           </th>
         );
       })}

@@ -1,17 +1,97 @@
 {
   "title": "Weekly Planner",
   "tools": {
-    "leaveTool": "Leave tool",
-    "cut": "Cut",
+    "leaveTool": "Leave Tool",
+    "cut": "Split",
     "merge": "Merge",
     "erase": "Eraser",
-    "font": "Typography",
+    "font": "Font",
     "paint": "Paint",
-    "addActivity": "Add activity",
+    "addActivity": "Add Activity",
     "undo": "Undo",
     "redo": "Redo",
     "reset": "Reset",
     "howItWorks": "How it works?",
     "clock": "Clock"
+  },
+  "days": {
+    "monday": "Monday",
+    "tuesday": "Tuesday",
+    "wednesday": "Wednesday",
+    "thursday": "Thursday",
+    "friday": "Friday",
+    "saturday": "Saturday",
+    "sunday": "Sunday"
+  },
+  "form": {
+    "activityName": "Activity Name",
+    "startTime": "Start Time",
+    "endTime": "End Time",
+    "color": "Color",
+    "addActivity": "Add Activity",
+    "cancel": "Cancel"
+  },
+  "howItWorks": {
+    "title": "How the Weekly Planner Works",
+    "intro": "Welcome to the Weekly Planner! This tool allows you to organize your weekly activities visually and in a personalized way.",
+    "toolsTitle": "Tool Explanation:",
+    "tools": {
+      "split": {
+        "title": "Split",
+        "desc": "Allows you to divide hours into quarters or half-hours, or split cells that you had previously merged."
+      },
+      "merge": {
+        "title": "Merge",
+        "desc": "Used to merge hours or cells with activities, creating visual groups. You can merge as many cells as you need."
+      },
+      "erase": {
+        "title": "Eraser",
+        "desc": "Erases activities and colors applied to cells. Just click on the cell you want to clean."
+      },
+      "font": {
+        "title": "Font",
+        "desc": "Changes the general font of the planner by selecting this tool and choosing the desired font."
+      },
+      "paint": {
+        "title": "Paint",
+        "desc": "Allows you to apply colors to cells, weekdays, or the background if you click outside the table. You can paint as many cells as you want until you leave the tool."
+      },
+      "addActivity": {
+        "title": "Add Activity",
+        "desc": "Opens a form to add activities more efficiently, although you can also type directly into the cell by clicking on it."
+      },
+      "leaveTool": {
+        "title": "Leave Tool",
+        "desc": "Used to stop using the active tool and return to normal selection."
+      },
+      "undo": {
+        "title": "Undo",
+        "desc": "Reverts to the previous state of the planner."
+      },
+      "redo": {
+        "title": "Redo",
+        "desc": "Restores the last undone action."
+      },
+      "reset": {
+        "title": "Reset",
+        "desc": "Completely resets the planner. A confirmation message will appear, and if confirmed, the schedule will return to its initial (empty) state."
+      },
+      "moveHours": {
+        "title": "Move Hours",
+        "desc": "You can move hours up or down using the arrows next to each hour."
+      }
+    },
+    "outro": "We hope these tools help you organize your week visually and easily!",
+    "close": "Close"
+  },
+  "hours": "Hours",
+  "Exporta PDF": "Export PDF",
+  "resetConfirmation": {
+    "title": "Confirm Reset",
+    "message": "Are you sure you want to reset the planner? This action cannot be undone.",
+    "cancel": "Cancel",
+    "confirm": "Reset"
   }
 }
+
+

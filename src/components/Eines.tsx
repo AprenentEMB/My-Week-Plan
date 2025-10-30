@@ -6,9 +6,11 @@ import { fonts } from '../const/fonts';
 import { textColorClassForBackground } from '../utils/text-color';
 import { ArrowDownIcon, ArrowUpIcon } from '../icons/icons';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 
 export function Eines() {
+  const { t } = useTranslation();
   const { einesDisponibles, einaSeleccionada, setEinaSeleccionada } = useEinesStore();
   const {
     colorEscollitTemporal,
@@ -223,9 +225,9 @@ export function Eines() {
             onClick={e => e.stopPropagation()}
           >
             <div className="mb-3">
-              <div className="text-lg font-medium">Confirma Reset</div>
+              <div className="text-lg font-medium">{t('resetConfirmation.title')}</div>
               <div className="text-sm text-gray-600 mt-2">
-                Estàs segur que vols reiniciar el planejador? Aquesta acció no es pot desfer.
+                {t('resetConfirmation.message')}
               </div>
             </div>
 
@@ -235,14 +237,14 @@ export function Eines() {
                 className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
                 type="button"
               >
-                Cancel·la
+                {t('resetConfirmation.cancel')}
               </button>
               <button
                 onClick={handleResetPlanejador}
                 className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
                 type="button"
               >
-                Reinicia
+                {t('resetConfirmation.confirm')}
               </button>
             </div>
           </div>
@@ -252,125 +254,113 @@ export function Eines() {
       {/* Modal de "Com funciona?" */}
       {obreModalComFunciona && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-gray-200/5 backdrop-blur-sm"
-          role="dialog"
-          aria-modal="true"
-        >
-          <div
-            className="w-full max-w-2xl p-6 bg-white rounded shadow-lg max-h-[80vh] overflow-y-auto"
-            onClick={e => e.stopPropagation()}
+      className="fixed inset-0 z-50 flex items-center justify-center bg-gray-200/5 backdrop-blur-sm"
+      role="dialog"
+      aria-modal="true"
+    >
+      <div
+        className="w-full max-w-2xl p-6 bg-white rounded shadow-lg max-h-[80vh] overflow-y-auto"
+        onClick={e => e.stopPropagation()}
+      >
+        {/* Header */}
+        <div className="flex items-center justify-between mb-3">
+          <div className="text-lg font-medium">{t('howItWorks.title')}</div>
+          <button
+            aria-label={t('howItWorks.close')}
+            onClick={() => {
+              setObreModalComFunciona(false);
+              setEinaSeleccionada(null);
+            }}
+            className="text-gray-600 hover:text-gray-900 ml-2"
+            type="button"
           >
-            <div className="flex items-center justify-between mb-3">
-              <div className="text-lg font-medium">Com funciona el Planificador Setmanal</div>
-              <button
-                aria-label="Tanca"
-                onClick={() => { setObreModalComFunciona(false); setEinaSeleccionada(null); }}
-                className="text-gray-600 hover:text-gray-900 ml-2"
-                type="button"
-              >
-                ×
-              </button>
-            </div>
-
-            <div className="text-sm text-gray-700 space-y-4">
-              <p>
-                Benvingut al Planificador Setmanal! Aquesta eina et permet organitzar les teves
-                activitats setmanals de manera visual i personalitzada.
-              </p>
-
-              <p>
-                <strong>Explicació de les eines:</strong>
-              </p>
-              <ul className="list-disc list-inside space-y-2">
-                <li className="flex items-start gap-2">
-                  <span>✂️</span>
-                  <span>
-                    <strong>Parteix:</strong> Permet dividir les hores en quarts o mitges hores, o
-                    tornar a dividir cel·les que havies fusionat.
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span>🔗</span>
-                  <span>
-                    <strong>Fusiona:</strong> Serveix per fusionar hores o cel·les amb activitats,
-                    creant agrupacions visuals. Pots fusionar tantes cel·les com necessitis.
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span>🧽</span>
-                  <span>
-                    <strong>Goma:</strong> Esborra activitats i colors aplicats a les cel·les. Només
-                    cal fer clic a la cel·la que vols netejar.
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span>🔤</span>
-                  <span>
-                    <strong>Tipografia:</strong> Canvia la font general del planificador
-                    seleccionant aquesta eina i triant la tipografia desitjada.
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span>🎨</span>
-                  <span>
-                    <strong>Pinta:</strong> Permet aplicar colors a cel·les, dies de la setmana o al
-                    fons si cliques fora de la taula. Pots pintar tantes cel·les com vulguis fins
-                    que deixis l’eina.
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span>➕</span>
-                  <span>
-                    <strong>Afegeix Activitat:</strong> Obre un formulari per afegir activitats de
-                    manera més eficient, tot i que també pots escriure directament a la cel·la
-                    clicant-hi.
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span>✋</span>
-                  <span>
-                    <strong>Deixa l’eina:</strong> Serveix exactament per deixar de fer servir
-                    l’eina activa i tornar a la selecció normal.
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span>↩️</span>
-                  <span>
-                    <strong>Desfer:</strong> Torna enrere a l’estat anterior del planificador.
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span>↪️</span>
-                  <span>
-                    <strong>Refés:</strong> Restaura l’última acció desfeita.
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span>🔄</span>
-                  <span>
-                    <strong>Reset:</strong> Reinicia completament el planificador. Apareixerà un
-                    missatge de confirmació, i si confirmes, l’horari tornarà al seu estat inicial
-                    (buit).
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span>
-                    <ArrowDownIcon /> Hora <ArrowUpIcon />
-                  </span>
-                  <span>
-                    <strong>Desplaça les hores:</strong> Pots moure les hores cap amunt o cap avall
-                    utilitzant les fletxes situades al costat de cada hora.
-                  </span>
-                </li>
-              </ul>
-
-              <p>
-                Esperem que aquestes eines t’ajudin a organitzar millor la teva setmana de manera
-                visual i senzilla!
-              </p>
-            </div>
-          </div>
+            ×
+          </button>
         </div>
+
+        {/* Contingut */}
+        <div className="text-sm text-gray-700 space-y-4">
+          <p>{t('howItWorks.intro')}</p>
+
+          <p>
+            <strong>{t('howItWorks.toolsTitle')}</strong>
+          </p>
+
+          <ul className="list-disc list-inside space-y-2">
+            <li className="flex items-start gap-2">
+              <span>✂️</span>
+              <span>
+                <strong>{t('howItWorks.tools.split.title')}:</strong> {t('howItWorks.tools.split.desc')}
+              </span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span>🔗</span>
+              <span>
+                <strong>{t('howItWorks.tools.merge.title')}:</strong> {t('howItWorks.tools.merge.desc')}
+              </span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span>🧽</span>
+              <span>
+                <strong>{t('howItWorks.tools.erase.title')}:</strong> {t('howItWorks.tools.erase.desc')}
+              </span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span>🔤</span>
+              <span>
+                <strong>{t('howItWorks.tools.font.title')}:</strong> {t('howItWorks.tools.font.desc')}
+              </span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span>🎨</span>
+              <span>
+                <strong>{t('howItWorks.tools.paint.title')}:</strong> {t('howItWorks.tools.paint.desc')}
+              </span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span>➕</span>
+              <span>
+                <strong>{t('howItWorks.tools.addActivity.title')}:</strong> {t('howItWorks.tools.addActivity.desc')}
+              </span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span>✋</span>
+              <span>
+                <strong>{t('howItWorks.tools.leaveTool.title')}:</strong> {t('howItWorks.tools.leaveTool.desc')}
+              </span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span>↩️</span>
+              <span>
+                <strong>{t('howItWorks.tools.undo.title')}:</strong> {t('howItWorks.tools.undo.desc')}
+              </span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span>↪️</span>
+              <span>
+                <strong>{t('howItWorks.tools.redo.title')}:</strong> {t('howItWorks.tools.redo.desc')}
+              </span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span>🔄</span>
+              <span>
+                <strong>{t('howItWorks.tools.reset.title')}:</strong> {t('howItWorks.tools.reset.desc')}
+              </span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span>
+                <span className="w-4 h-4 inline"><ArrowDownIcon /></span> Hora <span className="w-4 h-4 inline"><ArrowUpIcon /></span>
+              </span>
+              <span>
+                <strong>{t('howItWorks.tools.moveHours.title')}:</strong> {t('howItWorks.tools.moveHours.desc')}
+              </span>
+            </li>
+          </ul>
+
+          <p>{t('howItWorks.outro')}</p>
+        </div>
+      </div>
+    </div>
       )}
     </div>
   );

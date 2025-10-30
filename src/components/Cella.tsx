@@ -59,8 +59,8 @@ export function Cella({
       return;
     }
 
-    switch (einaSeleccionada.nom) {
-      case 'Fusiona':
+    switch (einaSeleccionada.id) {
+      case 'merge':
         if (fusio) {
           const noves = cellaFusionada.map(f =>
             f.superior === clau ? { ...f, files: f.files + 1 } : f
@@ -71,11 +71,11 @@ export function Cella({
         }
         break;
 
-      case 'Parteix':
+      case 'cut':
         setCellaFusionada(cellaFusionada.filter(f => f.superior !== clau && !esInferiorFusionada));
         break;
 
-      case 'Pinta':
+      case 'paint':
         if (colorEscollitTemporal) {
           // pinta també cel·les fusionades
           if (esSuperiorFusionada) {
@@ -89,7 +89,7 @@ export function Cella({
         }
         break;
 
-      case 'Goma':
+      case 'erase':
         // elimina el text
         guardarEdicio(clau, '');
         // elimina el color de fons

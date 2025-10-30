@@ -13,5 +13,86 @@
     "reset": "Reinicia",
     "howItWorks": "Com funciona?",
     "clock": "Rellotge"
+  },
+  "days": {
+    "monday": "Dilluns",
+    "tuesday": "Dimarts",
+    "wednesday": "Dimecres",
+    "thursday": "Dijous",
+    "friday": "Divendres",
+    "saturday": "Dissabte",
+    "sunday": "Diumenge"
+  },
+  "form": {
+    "activityName": "Nom de l'activitat",
+    "startTime": "Hora d'inici",
+    "endTime": "Hora de finalització",
+    "color": "Color",
+    "addActivity": "Afegeix Activitat",
+    "cancel": "Cancel·la"
+  },
+  "howItWorks": {
+    "title": "Com funciona el Planificador Setmanal",
+    "intro": "Benvingut al Planificador Setmanal! Aquesta eina et permet organitzar les teves activitats setmanals de manera visual i personalitzada.",
+    "toolsTitle": "Explicació de les eines:",
+    "tools": {
+      "split": {
+        "title": "Parteix",
+        "desc": "Permet dividir les hores en quarts o mitges hores, o tornar a dividir cel·les que havies fusionat."
+      },
+      "merge": {
+        "title": "Fusiona",
+        "desc": "Serveix per fusionar hores o cel·les amb activitats, creant agrupacions visuals. Pots fusionar tantes cel·les com necessitis."
+      },
+      "erase": {
+        "title": "Goma",
+        "desc": "Esborra activitats i colors aplicats a les cel·les. Només cal fer clic a la cel·la que vols netejar."
+      },
+      "font": {
+        "title": "Tipografia",
+        "desc": "Canvia la font general del planificador seleccionant aquesta eina i triant la tipografia desitjada."
+      },
+      "paint": {
+        "title": "Pinta",
+        "desc": "Permet aplicar colors a cel·les, dies de la setmana o al fons si cliques fora de la taula. Pots pintar tantes cel·les com vulguis fins que deixis l’eina."
+      },
+      "addActivity": {
+        "title": "Afegeix Activitat",
+        "desc": "Obre un formulari per afegir activitats de manera més eficient, tot i que també pots escriure directament a la cel·la clicant-hi."
+      },
+      "leaveTool": {
+        "title": "Deixa l’eina",
+        "desc": "Serveix exactament per deixar de fer servir l’eina activa i tornar a la selecció normal."
+      },
+      "undo": {
+        "title": "Desfer",
+        "desc": "Torna enrere a l’estat anterior del planificador."
+      },
+      "redo": {
+        "title": "Refés",
+        "desc": "Restaura l’última acció desfeita."
+      },
+      "reset": {
+        "title": "Reset",
+        "desc": "Reinicia completament el planificador. Apareixerà un missatge de confirmació, i si confirmes, l’horari tornarà al seu estat inicial (buit)."
+      },
+      "moveHours": {
+        "title": "Desplaça les hores",
+        "desc": "Pots moure les hores cap amunt o cap avall utilitzant les fletxes situades al costat de cada hora."
+      }
+    },
+    "outro": "Esperem que aquestes eines t’ajudin a organitzar millor la teva setmana de manera visual i senzilla!",
+    "close": "Tanca"
+  },
+  "hours": "Hores",
+  "Exporta PDF": "Exporta PDF",
+  "resetConfirmation": {
+    "title": "Confirma Reset",
+    "message": "Estàs segur que vols reiniciar el planejador? Aquesta acció no es pot desfer.",
+    "cancel": "Cancel·la",
+    "confirm": "Reinicia"
   }
+  
+    
+
 }

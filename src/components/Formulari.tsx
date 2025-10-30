@@ -2,8 +2,11 @@ import { useState, useEffect } from 'react';
 import { usePlanejadorStore } from '../stores/store';
 import { useEinesStore } from '../stores/storeEines';
 import { diesSetmana } from '../const/dies-de-la-setmana';
+import { useTranslation } from 'react-i18next';
 
 export function FormulariActivitat() {
+
+  const { t } = useTranslation();
   const { hores, setActivitats } = usePlanejadorStore();
   const { setEinaSeleccionada } = useEinesStore();
 
@@ -29,13 +32,13 @@ export function FormulariActivitat() {
     const indexInici = hores.indexOf(horaInici);
     const indexFi = hores.indexOf(horaFi);
 
-    if (indexInici === -1 || indexFi === -1 || indexFi <= indexInici) {
-      alert("L'interval d'hores no és vàlid!");
+     if (indexInici === -1 || indexFi === -1 || indexFi <= indexInici) {
+      alert(t("form.invalidTimeRange", "L'interval d'hores no és vàlid!"));
       return;
     }
 
     if (diesSeleccionats.length === 0) {
-      alert('Selecciona almenys un dia!');
+      alert(t("form.selectAtLeastOneDay", "Selecciona almenys un dia!"));
       return;
     }
 
@@ -66,7 +69,7 @@ export function FormulariActivitat() {
     >
       {/* Dies de la setmana */}
       <div className="flex flex-col">
-        <label className="text-sm font-medium mb-1">Dies</label>
+        <label className="text-sm font-medium mb-1">{t("form.days", "Dies")}</label>
         <div className="flex flex-wrap gap-2 md:gap-3">
           {diesSetmana.map(d => (
             <label
@@ -85,7 +88,7 @@ export function FormulariActivitat() {
                 onChange={() => toggleDia(d)}
                 className="hidden"
               />
-              {d}
+              {t(`days.${d.toLowerCase()}`)}
             </label>
           ))}
         </div>
@@ -93,7 +96,7 @@ export function FormulariActivitat() {
 
       {/* Hora inici */}
       <div className="flex flex-col">
-        <label className="text-sm font-medium mb-1">Des de</label>
+        <label className="text-sm font-medium mb-1">{t("form.startTime", "Hora d'inici")}</label>
         <select
           value={horaInici}
           onChange={e => setHoraInici(e.target.value)}
@@ -109,7 +112,7 @@ export function FormulariActivitat() {
 
       {/* Hora final */}
       <div className="flex flex-col">
-        <label className="text-sm font-medium mb-1">Fins</label>
+        <label className="text-sm font-medium mb-1">{t("form.endTime", "Hora de finalització")}</label>
         <select
           value={horaFi}
           onChange={e => setHoraFi(e.target.value)}
@@ -125,12 +128,11 @@ export function FormulariActivitat() {
 
       {/* Activitat */}
       <div className="flex flex-col flex-1 min-w-[200px]">
-        <label className="text-sm font-medium mb-1">Activitat</label>
+        <label className="text-sm font-medium mb-1">{t("form.activityName", "Nom de l'activitat")}</label>
         <input
           type="text"
           value={activitat}
           onChange={e => setActivitat(e.target.value)}
-          placeholder="Escriu l'activitat..."
           className="border p-2 rounded w-full"
         />
       </div>
@@ -139,7 +141,7 @@ export function FormulariActivitat() {
         type="submit"
         className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded"
       >
-        Afegir
+        {t("form.addActivity", "Afegeix Activitat")}
       </button>
     </form>
   );

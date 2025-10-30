@@ -1,6 +1,7 @@
 import React from 'react';
 import domtoimage from 'dom-to-image-more';
 import jsPDF from 'jspdf';
+import { useTranslation } from 'react-i18next';
 
 type ExportaPDFButtonProps = {
   targetId: string;
@@ -11,6 +12,7 @@ export const ExportaPDFButton: React.FC<ExportaPDFButtonProps> = ({
   targetId,
   fileName = 'taula.pdf',
 }) => {
+  const { t } = useTranslation();
   const handleExport = async () => {
     const node = document.getElementById(targetId);
     if (!node) {
@@ -69,7 +71,7 @@ export const ExportaPDFButton: React.FC<ExportaPDFButtonProps> = ({
       >
         <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
       </svg>
-      Exporta PDF
+      {t('Exporta PDF')}
     </button>
   );
 };
