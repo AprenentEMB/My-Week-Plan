@@ -49,19 +49,21 @@ export function PlanejadorSetmanal() {
 
   return (
     <div
-      id="taula-horari"
-      className="overflow-x-auto rounded-md shadow-lg p-2 sm:p-6 pb-20 mb-3 z-0"
-      onClick={() => {
-        if (einaSeleccionada?.id === 'paint') {
-          setGeneralBackgroundColor(colorEscollitTemporal || 'white');
-        }
-      }}
+  id="taula-horari"
+  className="w-full overflow-x-auto rounded-md shadow-lg p-2 sm:p-6 pb-20 mb-3 z-0"
+  style={{ WebkitOverflowScrolling: 'touch' }} // <- ajuda a scroll suau a iOS
+  onClick={() => {
+    if (einaSeleccionada?.id === 'paint') {
+      setGeneralBackgroundColor(colorEscollitTemporal || 'white');
+    }
+  }}
+>
+        <div className="min-w-[800px] sm:min-w-full">
+    <table
+      className="table-auto border-collapse border border-gray-300 w-full"
+      style={{ backgroundColor: generalBackgroundColor }}
+      onClick={e => e.stopPropagation()}
     >
-      <table
-        className="min-w-[800px] sm:min-w-full table-auto border-collapse border border-gray-300 z-10"
-        style={{ backgroundColor: generalBackgroundColor }}
-        onClick={e => e.stopPropagation()}
-      >
         <thead>
           <RowHeader />
         </thead>
@@ -142,6 +144,7 @@ export function PlanejadorSetmanal() {
           })}
         </tbody>
       </table>
+      </div>
     </div>
   );
 }

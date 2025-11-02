@@ -93,10 +93,11 @@ function App() {
 
       {/* ─── Taula del planificador ─── */}
       <motion.div
-        className="w-full max-w-5xl mt-6 flex flex-col items-center sm:ml-0"
+        className="w-full max-w-5xl mt-6 flex flex-col items-stretch sm:ml-0 overflow-visible"
         onClick={(e) => e.stopPropagation()}
         variants={itemVariants as Variants}
         transition={{ delay: 0.1 }}
+        style={{ WebkitOverflowScrolling: 'touch' }}
       >
         <PlanejadorSetmanal />
       </motion.div>
