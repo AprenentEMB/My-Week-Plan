@@ -1,31 +1,37 @@
 // ...existing code...
 type RGB = { r: number; g: number; b: number };
 
-// Accepta "#fff", "#ffffff", "rgb(255,255,255)" o "rgba(255,255,255,1)"
 export function parseColor(input?: string): RGB | null {
   if (!input) return null;
-  const s = input.trim();
+  const s = input.trim().toLowerCase();
+
+  // ignora transparents o heretats
+  if (['transparent', 'inherit', 'initial', 'unset'].includes(s)) return null;
+
   // hex
-  if (s[0] === '#') {
+  if (s.startsWith('#')) {
     const h = s.slice(1);
     const full =
       h.length === 3
+        ? h.split('').map(c => c + c).join('')
+        : h.length === 6
         ? h
-            .split('')
-            .map(c => c + c)
-            .join('')
-        : h;
+        : null;
+    if (!full) return null;
+
     const r = parseInt(full.slice(0, 2), 16);
     const g = parseInt(full.slice(2, 4), 16);
     const b = parseInt(full.slice(4, 6), 16);
-    if (Number.isNaN(r) || Number.isNaN(g) || Number.isNaN(b)) return null;
+    if ([r, g, b].some(Number.isNaN)) return null;
     return { r, g, b };
   }
+
   // rgb/rgba
   const m = s.match(/rgba?\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})/i);
   if (m) {
-    return { r: Number(m[1]), g: Number(m[2]), b: Number(m[3]) };
+    return { r: +m[1], g: +m[2], b: +m[3] };
   }
+
   return null;
 }
 
@@ -39,15 +45,28 @@ export function getLuminance(rgb: RGB) {
   return 0.2126 * r + 0.7152 * g + 0.0722 * b;
 }
 
-// retorna true si el color és "fosc"
-export function isDark(input?: string) {
-  const rgb = parseColor(input);
-  if (!rgb) return false;
+export function isDark(input?: string, fallbackBg: string = '#ffffff') {
+  const rgb = parseColor(input) ?? parseColor(fallbackBg);
+  if (!rgb) return false; // impossible, però per seguretat
   return getLuminance(rgb) < 0.5;
 }
 
-// retorna classe Tailwind per al text segons fons
-export function textColorClassForBackground(input?: string) {
-  return isDark(input) ? 'text-white' : 'text-gray-800';
+export function textColorClassForBackground(input?: string, fallbackBg: string = '#ffffff') {
+  return isDark(input, fallbackBg) ? 'text-white' : 'text-gray-800';
 }
+
+// 🔹 Nova funció per calcular el color del border
+export function getBorderColor(bg?: string, fallback: string = '#ffffff') {
+  if (!bg) return '#000000';
+
+  if (bg.startsWith('linear-gradient')) {
+    const m = bg.match(/#([0-9a-f]{3,6})/i);
+    const firstColor = m ? `#${m[1]}` : fallback;
+    return isDark(firstColor, fallback) ? '#ffffff' : '#000000';
+  }
+
+  return isDark(bg, fallback) ? '#ffffff' : '#000000';
+}
+
+
 // ...existing code...

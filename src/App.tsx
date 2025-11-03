@@ -71,35 +71,44 @@ function App() {
       animate="visible"
     >
 
-      <div className="w-full max-w-5xl flex justify-end mt-4">
+      <div className="w-full max-w-5xl flex justify-end mt-4 sm:ml-16">
         <LanguageSelector />
       </div>
       {einaSeleccionada && iconsForCursor.includes(einaSeleccionada.id) && <CursorFlotant />}
 
       {/* ─── Barra superior amb eines i exportació ─── */}
-      <motion.div
-        className="w-full max-w-5xl flex justify-end mt-4 items-center gap-4"
-        onClick={(e) => e.stopPropagation()}
-        variants={itemVariants as Variants}
-      >
-        <div className="mt-4 max-w-5xl">
-          <Eines />
-        </div>
-        <motion.div className="mr-6" whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}>
-          <ExportaPDFButton targetId="taula-horari" fileName="HorariSetmanal.pdf" />
-        </motion.div>
-      </motion.div>
+     <motion.div
+  className="w-full max-w-6xl flex justify-between mt-4 items-start gap-3 overflow-x-auto sm:overflow-x-visible overflow-y-visible"
+  onClick={(e) => e.stopPropagation()}
+  variants={itemVariants as Variants}
+  style={{ minHeight: '7rem' , background: generalBackgroundColor }} // 👈 dóna marge per l’animació
+>
+  <div className="flex items-center gap-2 min-w-max px-2 overflow-visible sm:pl-22">
+    <Eines />
+  </div>
+
+  <motion.div
+    className="mr-4 shrink-0 sm:mr-20"
+    whileHover={{ scale: 1.1 }}
+    whileTap={{ scale: 0.9 }}
+  >
+    <ExportaPDFButton targetId="taula-horari" fileName="HorariSetmanal.pdf" />
+  </motion.div>
+</motion.div>
+
+
 
       {/* ─── Taula del planificador ─── */}
       <motion.div
-        className="w-full max-w-5xl mt-6 flex flex-col items-stretch sm:ml-0 overflow-visible"
+        className="w-full max-w-5xl mt-6 flex flex-col items-stretch sm:ml-0 min-w-0"
         onClick={(e) => e.stopPropagation()}
         variants={itemVariants as Variants}
         transition={{ delay: 0.1 }}
-        style={{ WebkitOverflowScrolling: 'touch' }}
+        style={{ WebkitOverflowScrolling: 'touch', background: generalBackgroundColor }}
       >
-        <PlanejadorSetmanal />
+        <div className="w-full overflow-x-auto">
+          <PlanejadorSetmanal />
+        </div>
       </motion.div>
 
       {/* ─── Formulari d'activitats─── */}

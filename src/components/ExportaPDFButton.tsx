@@ -13,41 +13,39 @@ export const ExportaPDFButton: React.FC<ExportaPDFButtonProps> = ({
   fileName = 'taula.pdf',
 }) => {
   const { t } = useTranslation();
+
   const handleExport = async () => {
     const node = document.getElementById(targetId);
-    if (!node) {
-      console.error("No s'ha trobat l'element amb id:", targetId);
-      return;
-    }
+    if (!node) return;
 
     try {
-      // Captura la taula
-      const dataUrl = await domtoimage.toPng(node, { quality: 1, bgcolor: '#fff' });
-
+      const dataUrl = await domtoimage.toPng(node, { quality: 1, bgcolor: undefined });
       const img = new Image();
       img.src = dataUrl;
-      img.onload = () => {
-        const pdf = new jsPDF({
-          orientation: 'landscape',
-          unit: 'px',
-          format: 'a4',
-        });
 
+      img.onload = () => {
+        const pdf = new jsPDF({ orientation: 'portrait', unit: 'px', format: 'a4' });
         const pageWidth = pdf.internal.pageSize.getWidth();
         const pageHeight = pdf.internal.pageSize.getHeight();
-        const margin = 20;
+        const margin = 30;
 
-        // Escala proporcional segons la dimensió més restrictiva
-        const ratio = Math.min(
-          (pageWidth - 2 * margin) / img.width,
-          (pageHeight - 2 * margin) / img.height
-        );
+        const scale = (pageWidth - 2 * margin) / img.width;
+        const imgWidth = img.width * scale;
+        const imgHeight = img.height * scale;
 
-        const imgWidth = img.width * ratio;
-        const imgHeight = img.height * ratio;
+        let y = 0;
 
-        // Afegeix la imatge escalada al PDF amb marge
-        pdf.addImage(img, 'PNG', margin, margin, imgWidth, imgHeight);
+        // mentre encara hi ha imatge per imprimir
+        while (y < imgHeight) {
+          const remainingHeight = imgHeight - y;
+          const heightOnPage = Math.min(remainingHeight, pageHeight - 2 * margin);
+
+          pdf.addImage(img, 'PNG', margin, margin, imgWidth, heightOnPage, undefined, 'FAST');
+
+          y += heightOnPage;
+
+          if (y < imgHeight) pdf.addPage(); // nova pàgina si cal
+        }
 
         pdf.save(fileName);
       };

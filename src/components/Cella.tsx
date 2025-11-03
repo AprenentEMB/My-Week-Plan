@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { usePlanejadorStore } from '../stores/store';
 import { useEinesStore } from '../stores/storeEines';
-import { textColorClassForBackground, isDark } from '../utils/text-color';
+import { textColorClassForBackground} from '../utils/text-color';
 
 export function Cella({
   clau,
@@ -20,11 +20,13 @@ export function Cella({
     hores,
     cellaFusionada,
     setCellaFusionada,
-    cellsBackgroundsColor,
+    
     setCellsBackgroundsColor,
     colorEscollitTemporal,
-    generalBackgroundColor,
+    
   } = usePlanejadorStore();
+  const cellBgColor = usePlanejadorStore(state => state.cellsBackgroundsColor?.[clau]);
+const generalBackgroundColor = usePlanejadorStore(state => state.generalBackgroundColor);
   const { einaSeleccionada } = useEinesStore();
   const [localValor, setLocalValor] = useState(valor);
 
@@ -49,9 +51,11 @@ export function Cella({
 
   const rowSpan = esSuperiorFusionada ? fusio.files : 1;
 
-  const cellBgColor = cellsBackgroundsColor?.[clau];
-  const effectiveBg = cellBgColor ?? generalBackgroundColor ?? '#ffffff';
-  const textClass = textColorClassForBackground(effectiveBg);
+
+  const effectiveBg = cellBgColor ?? generalBackgroundColor ?? 'transparent';
+  const textClass = textColorClassForBackground(effectiveBg, generalBackgroundColor);
+
+
 
   const handleClick = () => {
     if (!einaSeleccionada) {
@@ -108,20 +112,20 @@ export function Cella({
     }
   };
 
-  const colorPerElsBordes = isDark(effectiveBg) ? '#FFFFFF' : '#000000';
+
 
   return (
     <td
-      rowSpan={rowSpan}
-      className={`border border-${colorPerElsBordes} p-2 text-center cursor-pointer hover:bg-gray-100 ${
-        textClass
-      }`}
-      style={cellBgColor ? { background: cellBgColor } : {}}
-      onClick={handleClick}
-    >
+  rowSpan={rowSpan}
+  className={`border p-2 text-center cursor-pointer ${textClass}`}
+      style={{
+        background: effectiveBg,
+      }}
+  onClick={handleClick}
+>
       {estaEditant ? (
         <input
-          className={`w-full text-center border-none focus:ring-2 focus:ring-blue-400 text-${textClass}`}
+          className={`w-full text-center border-none focus:ring-2 focus:ring-blue-400 ${textClass}`}
           value={localValor}
           onChange={e => setLocalValor(e.target.value)}
           onBlur={() => guardarEdicio(clau, localValor)}

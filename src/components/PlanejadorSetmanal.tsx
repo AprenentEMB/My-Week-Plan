@@ -10,6 +10,7 @@ import { textColorClassForBackground } from '../utils/text-color';
 import { diesSetmana } from '../const/dies-de-la-setmana';
 import { motion } from 'framer-motion';
 
+
 export function PlanejadorSetmanal() {
   const hores = usePlanejadorStore(state => state.hores);
   const activitats = usePlanejadorStore(state => state.activitats);
@@ -48,22 +49,26 @@ export function PlanejadorSetmanal() {
   };
 
   return (
-    <div
-  id="taula-horari"
-  className="w-full overflow-x-auto rounded-md shadow-lg p-2 sm:p-6 pb-20 mb-3 z-0"
-  style={{ WebkitOverflowScrolling: 'touch' }} // <- ajuda a scroll suau a iOS
-  onClick={() => {
-    if (einaSeleccionada?.id === 'paint') {
-      setGeneralBackgroundColor(colorEscollitTemporal || 'white');
-    }
-  }}
->
-        <div className="min-w-[800px] sm:min-w-full">
-    <table
-      className="table-auto border-collapse border border-gray-300 w-full"
-      style={{ backgroundColor: generalBackgroundColor }}
-      onClick={e => e.stopPropagation()}
+     <div
+      id="taula-horari"
+      className="w-full overflow-x-auto rounded-md shadow-lg p-2 sm:p-6 pb-20 mb-3 z-0 pdf-friendly"
+      style={{ WebkitOverflowScrolling: 'touch', background: generalBackgroundColor }} // <- ajuda a scroll suau a iOS
+      onClick={() => {
+        if (einaSeleccionada?.id === 'paint') {
+          setGeneralBackgroundColor(colorEscollitTemporal || 'white');
+        }
+      }}
     >
+      <div className="min-w-[800px] sm:min-w-full">
+       <table
+  className="table-auto w-full"
+  style={{
+    backgroundColor: generalBackgroundColor,
+    borderCollapse: 'separate', // 🔹 trenca la fusió dels bordes
+    borderSpacing: 0,            // 🔹 evita separacions visibles
+  }}
+  onClick={(e) => e.stopPropagation()}
+>
         <thead>
           <RowHeader />
         </thead>
@@ -90,7 +95,7 @@ export function PlanejadorSetmanal() {
                 ? 'text-slate-700'
                 : textColorClassForBackground(generalBackgroundColor);
             const horaClasses = [
-              'border',
+              
               'p-1 sm:p-2',
               'text-xs sm:text-sm md:text-base',
               'font-medium',
@@ -98,7 +103,7 @@ export function PlanejadorSetmanal() {
               textColorClass,
               esHoraActual && rellotgeActiu
                 ? 'bg-blue-100 border-blue-500 shadow-md text-slate-700'
-                : 'bg-transparent',
+                : 'bg-transparent bord',
             ].join(' ');
 
             return (

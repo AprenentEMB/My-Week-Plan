@@ -26,3 +26,27 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+/* Força línies visibles a l'element que s'exporta a PDF */
+.pdf-friendly,
+.pdf-friendly table {
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.pdf-friendly table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  background-clip: padding-box; /* evita que el fons sobreescrigui les línies */
+}
+
+/* Assegura bordes visibles encara que el fons sigui blanc */
+.pdf-friendly th,
+.pdf-friendly td {
+  border: 1px solid #374151 !important; /* gray-700 */
+}
+
+/* Opcional: si vols un fons blanc net durant l'export */
+.pdf-friendly {
+  background-color: #ffffff;
+}

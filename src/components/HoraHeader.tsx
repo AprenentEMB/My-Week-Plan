@@ -25,7 +25,7 @@ export function HoraHeader() {
   };
 
   return (
-    <th className="w-32 border border-gray-300 bg-gray-800 p-2 text-white">
+    <th className="w-32 bg-gray-800 p-2 text-white">
       <div className="flex items-center justify-center space-x-2">
         <button
           className="flex items-center mx-auto rounded-full p-1 hover:bg-gray-700"
