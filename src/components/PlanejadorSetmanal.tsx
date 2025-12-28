@@ -1,15 +1,12 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useEinesStore } from '../stores/storeEines';
 import { usePlanejadorStore } from '../stores/store';
 import { useHours } from '../hooks/useHours';
-import { ca } from 'date-fns/locale';
-import { useHoraActual } from '../utils/hora-actual';
 import { Cella } from './Cella';
 import { RowHeader } from './RowHeader';
 import { textColorClassForBackground } from '../utils/text-color';
 import { diesSetmana } from '../const/dies-de-la-setmana';
 import { motion } from 'framer-motion';
-
 
 export function PlanejadorSetmanal() {
   const hores = usePlanejadorStore(state => state.hores);
@@ -18,24 +15,23 @@ export function PlanejadorSetmanal() {
   const generalBackgroundColor = usePlanejadorStore(state => state.generalBackgroundColor);
   const setGeneralBackgroundColor = usePlanejadorStore(state => state.setGeneralBackgroundColor);
   const colorEscollitTemporal = usePlanejadorStore(state => state.colorEscollitTemporal);
-  const rellotgeActiu = usePlanejadorStore(state => state.rellotgeActiu);
 
   const { einaSeleccionada } = useEinesStore();
   const { handleDividir, handleUnir } = useHours();
   const [editant, setEditant] = useState<string | null>(null);
   const [animantFila, setAnimantFila] = useState<string | null>(null);
 
-  const horaActual = useHoraActual({
-    intervalMs: 15_000,
-    format: 'HH:mm',
-    locale: ca,
-  });
+  const [rowHeights, setRowHeights] = useState<Record<string, number>>(
+    hores.reduce((acc, h) => ({ ...acc, [h]: 40 }), {}) // Altura inicial 40px
+  );
+  const resizingRowRef = useRef<string | null>(null);
 
   const començarEdicio = (clau: string) => setEditant(clau);
   const guardarEdicio = (clau: string, nouValor: string) => {
     setActivitats(clau, nouValor);
     setEditant(null);
   };
+
   const handleJoinOrDivide = (hora: string) => {
     setAnimantFila(hora);
     if (einaSeleccionada) {
@@ -48,78 +44,79 @@ export function PlanejadorSetmanal() {
     setTimeout(() => setAnimantFila(null), 600);
   };
 
+  // Drag vertical
+  const onMouseMove = (e: MouseEvent) => {
+    if (!resizingRowRef.current) return;
+    const row = resizingRowRef.current;
+    const rect = document.getElementById(`row-${row}`)?.getBoundingClientRect();
+    if (!rect) return;
+    const novaAltura = Math.max(30, e.clientY - rect.top);
+    setRowHeights(prev => ({ ...prev, [row]: novaAltura }));
+  };
+
+  const onMouseUp = () => {
+    resizingRowRef.current = null;
+  };
+
+  useEffect(() => {
+    window.addEventListener('mousemove', onMouseMove);
+    window.addEventListener('mouseup', onMouseUp);
+    return () => {
+      window.removeEventListener('mousemove', onMouseMove);
+      window.removeEventListener('mouseup', onMouseUp);
+    };
+  }, []);
+
   return (
-     <div
+    <div
       id="taula-horari"
-      className="w-full overflow-x-auto rounded-md shadow-lg p-2 sm:p-6 pb-20 mb-3 z-0 pdf-friendly"
-      style={{ WebkitOverflowScrolling: 'touch', background: generalBackgroundColor }} // <- ajuda a scroll suau a iOS
+      className="w-full rounded-md shadow-lg p-2 sm:p-6 pb-20 mb-3 z-0 pdf-friendly"
+      style={{ WebkitOverflowScrolling: 'touch', background: generalBackgroundColor }}
       onClick={() => {
         if (einaSeleccionada?.id === 'paint') {
           setGeneralBackgroundColor(colorEscollitTemporal || 'white');
         }
       }}
     >
-      <div className="min-w-[800px] sm:min-w-full">
-       <table
-  className="table-auto w-full"
-  style={{
-    backgroundColor: generalBackgroundColor,
-    borderCollapse: 'separate', // 🔹 trenca la fusió dels bordes
-    borderSpacing: 0,            // 🔹 evita separacions visibles
-  }}
-  onClick={(e) => e.stopPropagation()}
->
+      <table
+        className="table-auto w-80%"
+        style={{
+          backgroundColor: generalBackgroundColor,
+          borderCollapse: 'separate',
+          borderSpacing: 0,
+          tableLayout: 'fixed', // columnes fixes
+        }}
+        onClick={e => e.stopPropagation()}
+      >
         <thead>
           <RowHeader />
         </thead>
-
         <tbody>
           {hores.map(hora => {
-            const [h, m] = hora.split(':').map(Number);
-            const [hc, mc] = horaActual.split(':').map(Number);
-
-            const horaEnMinuts = h * 60 + m;
-            const actualEnMinuts = hc * 60 + mc;
-
-            const index = hores.indexOf(hora);
-            const nextHora = hores[index + 1];
-            const nextEnMinuts = nextHora
-              ? Number(nextHora.split(':')[0]) * 60 + Number(nextHora.split(':')[1])
-              : horaEnMinuts + 60;
-
-            const esHoraActual = actualEnMinuts >= horaEnMinuts && actualEnMinuts < nextEnMinuts;
             const esFilaAnimant = animantFila === hora;
+            const textColorClass = textColorClassForBackground(generalBackgroundColor);
 
-            const textColorClass =
-              esHoraActual && rellotgeActiu
-                ? 'text-slate-700'
-                : textColorClassForBackground(generalBackgroundColor);
             const horaClasses = [
-              
               'p-1 sm:p-2',
               'text-xs sm:text-sm md:text-base',
               'font-medium',
               'cursor-pointer',
               textColorClass,
-              esHoraActual && rellotgeActiu
-                ? 'bg-blue-100 border-blue-500 shadow-md text-slate-700'
-                : 'bg-transparent bord',
+              'bg-transparent bord',
             ].join(' ');
 
             return (
               <motion.tr
                 key={hora}
+                id={`row-${hora}`}
                 initial={esFilaAnimant ? { opacity: 0, y: -20 } : undefined}
                 animate={{
-                  backgroundColor: esFilaAnimant
-                    ? '#f0f9ff'
-                    : esHoraActual && rellotgeActiu
-                      ? '#dbeafe' // blau clar per l’hora actual
-                      : 'transparent',
+                  backgroundColor: esFilaAnimant ? '#f0f9ff' : 'transparent',
                   opacity: esFilaAnimant ? 0.2 : 1,
                 }}
                 transition={{ duration: 0.5, ease: 'easeOut' }}
-                className="transition-colors duration-300"
+                className="transition-colors duration-300 relative"
+                style={{ height: rowHeights[hora], position: 'relative' }}
               >
                 <td
                   className={horaClasses}
@@ -131,28 +128,50 @@ export function PlanejadorSetmanal() {
 
                 {diesSetmana.map(dia => {
                   const clau = `${dia}-${hora}`;
-                  const estaEditant = editant === clau;
-
                   return (
                     <Cella
                       key={clau}
                       clau={clau}
-                      estaEditant={estaEditant}
+                      estaEditant={editant === clau}
                       valor={activitats[clau] || ''}
                       començarEdicio={començarEdicio}
                       guardarEdicio={guardarEdicio}
+                      style={{
+                        wordBreak: 'break-word',
+                        overflowWrap: 'break-word',
+                      }}
                     />
                   );
                 })}
+
+                {/* Drag handle invisible a tota la part inferior */}
+                <div
+                  style={{
+                    position: 'absolute',
+                    bottom: 0,
+                    left: 0,
+                    width: '100%',
+                    height: 8,
+                    cursor: 'row-resize',
+                    userSelect: 'none',
+                    pointerEvents: 'auto',
+                  }}
+                  onMouseDown={() => (resizingRowRef.current = hora)}
+                />
               </motion.tr>
             );
           })}
         </tbody>
       </table>
-      </div>
     </div>
   );
 }
+
+
+
+
+
+
 
 /*
 

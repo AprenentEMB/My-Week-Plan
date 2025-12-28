@@ -91,7 +91,24 @@
     "message": "Estàs segur que vols reiniciar el planejador? Aquesta acció no es pot desfer.",
     "cancel": "Cancel·la",
     "confirm": "Reinicia"
+  },
+  "sidebar": {
+    "title": "Tutorials Ràpids",
+    "footer": "Tutorials de 30s per dominar ràpidament el planificador"
+  },
+  "tutorial1": {
+    "title": "Com crear una activitat",
+    "desc": "Aprèn en 30s com afegir una activitat."
+  },
+  "tutorial2": {
+    "title": "Fusionar cel·les",
+    "desc": "Tutorial ràpid sobre fusionar cel·les."
+  },
+    "language": {
+    "label": "Idioma"
   }
+
+
   
     
 

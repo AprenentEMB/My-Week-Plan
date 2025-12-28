@@ -118,26 +118,33 @@ const generalBackgroundColor = usePlanejadorStore(state => state.generalBackgrou
     <td
   rowSpan={rowSpan}
   className={`border p-2 text-center cursor-pointer ${textClass}`}
-      style={{
-        background: effectiveBg,
-      }}
+  style={{
+    background: effectiveBg,
+    wordBreak: 'break-word',      // trenca paraules llargues
+    overflowWrap: 'break-word',   // trenca línies llargues
+    whiteSpace: 'normal',         // important! permet salt de línia
+  }}
   onClick={handleClick}
 >
-      {estaEditant ? (
-        <input
-          className={`w-full text-center border-none focus:ring-2 focus:ring-blue-400 ${textClass}`}
-          value={localValor}
-          onChange={e => setLocalValor(e.target.value)}
-          onBlur={() => guardarEdicio(clau, localValor)}
-          onKeyDown={e => {
-            if (e.key === 'Enter') guardarEdicio(clau, localValor);
-            if (e.key === 'Escape') setLocalValor(valor);
-          }}
-          autoFocus
-        />
-      ) : (
-        <span>{valor}</span>
-      )}
-    </td>
+  {estaEditant ? (
+    <input
+      className={`w-full text-center border-none focus:ring-2 focus:ring-blue-400 ${textClass}`}
+      value={localValor}
+      onChange={e => setLocalValor(e.target.value)}
+      onBlur={() => guardarEdicio(clau, localValor)}
+      onKeyDown={e => {
+        if (e.key === 'Enter') guardarEdicio(clau, localValor);
+        if (e.key === 'Escape') setLocalValor(valor);
+      }}
+      autoFocus
+      style={{
+        whiteSpace: 'normal',       // permet salt de línia dins l'input (només si és multi-line)
+      }}
+    />
+  ) : (
+    <span>{valor}</span>
+  )}
+</td>
+
   );
 }

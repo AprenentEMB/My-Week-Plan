@@ -10,6 +10,7 @@ import { motion } from 'framer-motion';
 import type { Variants } from 'framer-motion';
 import { containerVariants, itemVariants } from './const/animations';
 import { LanguageSelector } from './components/LanguageSelector';
+import { SidebarLeft } from './components/SideBar';
 
 function App() {
   const {
@@ -70,7 +71,7 @@ function App() {
       initial="hidden"
       animate="visible"
     >
-
+      <SidebarLeft />
       <div className="w-full max-w-5xl flex justify-end mt-4 sm:ml-16">
         <LanguageSelector />
       </div>
@@ -144,3 +145,4 @@ function App() {
 }
 
 export default App;
+

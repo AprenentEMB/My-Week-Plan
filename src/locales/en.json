@@ -91,7 +91,22 @@
     "message": "Are you sure you want to reset the planner? This action cannot be undone.",
     "cancel": "Cancel",
     "confirm": "Reset"
-  }
+  },
+  "sidebar": {
+    "title": "Quick Tutorials",
+    "footer": "30s tutorials to quickly master the planner"
+  },
+  "tutorial1": {
+    "title": "How to create an activity",
+    "desc": "Learn in 30s how to add an activity."
+  },
+  "tutorial2": {
+    "title": "Merging cells",
+    "desc": "Quick tutorial on merging cells."
+  },
+    "language": {
+      "label": "Language"
+    }
 }
 
 

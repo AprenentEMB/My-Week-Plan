@@ -91,6 +91,21 @@
     "message": "¿Estás seguro de que quieres reiniciar el planificador? Esta acción no se puede deshacer.",
     "cancel": "Cancelar",
     "confirm": "Reiniciar"
+  },
+  "sidebar": {
+    "title": "Tutoriales Rápidos",
+    "footer": "Tutoriales de 30s para dominar rápidamente el planificador"
+  },
+  "tutorial1": {
+    "title": "Cómo crear una actividad",
+    "desc": "Aprende en 30s cómo añadir una actividad."
+  },
+  "tutorial2": {
+    "title": "Fusionar celdas",
+    "desc": "Tutorial rápido sobre fusionar celdas."
+  },
+  "language": {
+    "label": "Idioma"
   }
 }
 

@@ -2,6 +2,8 @@ import React from 'react';
 import domtoimage from 'dom-to-image-more';
 import jsPDF from 'jspdf';
 import { useTranslation } from 'react-i18next';
+import { Button } from '@/components/ui/button';
+import { Download } from 'lucide-react';
 
 type ExportaPDFButtonProps = {
   targetId: string;
@@ -35,7 +37,6 @@ export const ExportaPDFButton: React.FC<ExportaPDFButtonProps> = ({
 
         let y = 0;
 
-        // mentre encara hi ha imatge per imprimir
         while (y < imgHeight) {
           const remainingHeight = imgHeight - y;
           const heightOnPage = Math.min(remainingHeight, pageHeight - 2 * margin);
@@ -44,7 +45,7 @@ export const ExportaPDFButton: React.FC<ExportaPDFButtonProps> = ({
 
           y += heightOnPage;
 
-          if (y < imgHeight) pdf.addPage(); // nova pàgina si cal
+          if (y < imgHeight) pdf.addPage();
         }
 
         pdf.save(fileName);
@@ -55,21 +56,22 @@ export const ExportaPDFButton: React.FC<ExportaPDFButtonProps> = ({
   };
 
   return (
-    <button
+    <Button
       onClick={handleExport}
-      className="flex items-center gap-1 px-2 py-1 bg-sky-800 text-white font-semibold rounded-lg shadow-md hover:bg-sky-700 hover:shadow-lg transition-all duration-200"
+      variant="outline" // ShadCN variants: 'default', 'outline', 'ghost', etc.
+      size="sm"
+      className="
+  flex items-center gap-2
+  bg-indigo-600 hover:bg-indigo-700
+  text-white
+  px-3 py-2
+  rounded-md
+  shadow-sm hover:shadow-md
+  transition-colors
+"
     >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        className="h-5 w-5"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-        strokeWidth={2}
-      >
-        <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
-      </svg>
+      <Download className="h-4 w-4" />
       {t('Exporta PDF')}
-    </button>
+    </Button>
   );
 };

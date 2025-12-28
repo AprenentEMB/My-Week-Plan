@@ -1,13 +1,11 @@
 import { useState, useMemo } from 'react';
 import { useEinesStore } from '../stores/storeEines';
-import { usePlanejadorStore } from '../stores/store'; // ajusta la ruta si cal
-import { palette } from '../const/paleta'; // defineix una paleta de colors aquí o importa-la des d'un altre lloc
+import { usePlanejadorStore } from '../stores/store';
+import { palette } from '../const/paleta';
 import { fonts } from '../const/fonts';
 import { textColorClassForBackground } from '../utils/text-color';
-import { ArrowDownIcon, ArrowUpIcon } from '../icons/icons';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
-
 
 export function Eines() {
   const { t } = useTranslation();
@@ -19,32 +17,26 @@ export function Eines() {
     generalBackgroundColor,
     setResetPlanejador,
     setGeneralBackgroundColor,
-    rellotgeActiu,
-    setRellotgeActiu,
   } = usePlanejadorStore();
+
   const [openColorPicker, setOpenColorPicker] = useState(false);
   const [obreConfirmacioReset, setObreConfirmacioReset] = useState(false);
   const [obreModalComFunciona, setObreModalComFunciona] = useState(false);
 
   const handleEinaClick = (eina: { id: string; nom: string; icona: string }) => {
     if (eina.id === "leaveTool") {
-      // desselecciona qualsevol eina activa
       setEinaSeleccionada(null);
       setColorEscollitTemporal('');
       return;
     }
     if (eina.id === 'form') {
-      // obre el formulari d'activitats
       setEinaSeleccionada(eina);
-
       return;
     }
     if (eina.id === 'paint') {
-      // obre el selector de color directament
       setOpenColorPicker(true);
       setEinaSeleccionada(eina);
     } else {
-      // per altres eines, només selecciona o desselecciona
       setOpenColorPicker(false);
       setEinaSeleccionada(einaSeleccionada?.id === eina.id ? null : eina);
     }
@@ -64,11 +56,7 @@ export function Eines() {
       return;
     }
     if (eina.id === 'howItWorks') {
-    
       setObreModalComFunciona(true);
-    }
-    if (eina.id === 'clock') {
-      setRellotgeActiu(!rellotgeActiu);
     }
   };
 
@@ -127,7 +115,7 @@ export function Eines() {
           className="fixed inset-0 z-50 flex items-center justify-center bg-gray-200/5 backdrop-blur-sm"
           role="dialog"
           aria-modal="true"
-          onClick= {() => setOpenColorPicker(false)}
+          onClick={() => setOpenColorPicker(false)}
         >
           <div
             className="w-full max-w-md p-4 bg-white rounded shadow-lg"
@@ -166,6 +154,7 @@ export function Eines() {
           </div>
         </div>
       )}
+
       {/* Modal central per a l'eina "Tipografia" */}
       {einaSeleccionada?.id === 'font' && (
         <div
@@ -177,7 +166,7 @@ export function Eines() {
             className="w-full max-w-md p-4 rounded shadow-lg max-h-[80vh] overflow-y-auto bg-slate-400/70"
             onClick={e => e.stopPropagation()}
           >
-            <div className="flex items-center justify-between mb-3 sticky top-0  z-10 pb-2">
+            <div className="flex items-center justify-between mb-3 sticky top-0 z-10 pb-2">
               <button
                 aria-label="Tanca"
                 onClick={() => {
@@ -213,6 +202,7 @@ export function Eines() {
           </div>
         </div>
       )}
+
       {/* Modal de confirmació per a l'eina "Reset" */}
       {obreConfirmacioReset && (
         <div
@@ -251,117 +241,107 @@ export function Eines() {
         </div>
       )}
 
-      {/* Modal de "Com funciona?" */}
+      {/* Modal de "Com funciona?" sense referències al rellotge */}
       {obreModalComFunciona && (
         <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-gray-200/5 backdrop-blur-sm"
-      role="dialog"
-      aria-modal="true"
-    >
-      <div
-        className="w-full max-w-2xl p-6 bg-white rounded shadow-lg max-h-[80vh] overflow-y-auto"
-        onClick={e => e.stopPropagation()}
-      >
-        {/* Header */}
-        <div className="flex items-center justify-between mb-3">
-          <div className="text-lg font-medium">{t('howItWorks.title')}</div>
-          <button
-            aria-label={t('howItWorks.close')}
-            onClick={() => {
-              setObreModalComFunciona(false);
-              setEinaSeleccionada(null);
-            }}
-            className="text-gray-600 hover:text-gray-900 ml-2"
-            type="button"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-gray-200/5 backdrop-blur-sm"
+          role="dialog"
+          aria-modal="true"
+        >
+          <div
+            className="w-full max-w-2xl p-6 bg-white rounded shadow-lg max-h-[80vh] overflow-y-auto"
+            onClick={e => e.stopPropagation()}
           >
-            ×
-          </button>
+            {/* Header */}
+            <div className="flex items-center justify-between mb-3">
+              <div className="text-lg font-medium">{t('howItWorks.title')}</div>
+              <button
+                aria-label={t('howItWorks.close')}
+                onClick={() => {
+                  setObreModalComFunciona(false);
+                  setEinaSeleccionada(null);
+                }}
+                className="text-gray-600 hover:text-gray-900 ml-2"
+                type="button"
+              >
+                ×
+              </button>
+            </div>
+
+            {/* Contingut */}
+            <div className="text-sm text-gray-700 space-y-4">
+              <p>{t('howItWorks.intro')}</p>
+              <p>
+                <strong>{t('howItWorks.toolsTitle')}</strong>
+              </p>
+              <ul className="list-disc list-inside space-y-2">
+                <li className="flex items-start gap-2">
+                  <span>✂️</span>
+                  <span>
+                    <strong>{t('howItWorks.tools.split.title')}:</strong> {t('howItWorks.tools.split.desc')}
+                  </span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span>🔗</span>
+                  <span>
+                    <strong>{t('howItWorks.tools.merge.title')}:</strong> {t('howItWorks.tools.merge.desc')}
+                  </span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span>🧽</span>
+                  <span>
+                    <strong>{t('howItWorks.tools.erase.title')}:</strong> {t('howItWorks.tools.erase.desc')}
+                  </span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span>🔤</span>
+                  <span>
+                    <strong>{t('howItWorks.tools.font.title')}:</strong> {t('howItWorks.tools.font.desc')}
+                  </span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span>🎨</span>
+                  <span>
+                    <strong>{t('howItWorks.tools.paint.title')}:</strong> {t('howItWorks.tools.paint.desc')}
+                  </span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span>➕</span>
+                  <span>
+                    <strong>{t('howItWorks.tools.addActivity.title')}:</strong> {t('howItWorks.tools.addActivity.desc')}
+                  </span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span>✋</span>
+                  <span>
+                    <strong>{t('howItWorks.tools.leaveTool.title')}:</strong> {t('howItWorks.tools.leaveTool.desc')}
+                  </span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span>↩️</span>
+                  <span>
+                    <strong>{t('howItWorks.tools.undo.title')}:</strong> {t('howItWorks.tools.undo.desc')}
+                  </span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span>↪️</span>
+                  <span>
+                    <strong>{t('howItWorks.tools.redo.title')}:</strong> {t('howItWorks.tools.redo.desc')}
+                  </span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span>🔄</span>
+                  <span>
+                    <strong>{t('howItWorks.tools.reset.title')}:</strong> {t('howItWorks.tools.reset.desc')}
+                  </span>
+                </li>
+              </ul>
+              <p>{t('howItWorks.outro')}</p>
+            </div>
+          </div>
         </div>
-
-        {/* Contingut */}
-        <div className="text-sm text-gray-700 space-y-4">
-          <p>{t('howItWorks.intro')}</p>
-
-          <p>
-            <strong>{t('howItWorks.toolsTitle')}</strong>
-          </p>
-
-          <ul className="list-disc list-inside space-y-2">
-            <li className="flex items-start gap-2">
-              <span>✂️</span>
-              <span>
-                <strong>{t('howItWorks.tools.split.title')}:</strong> {t('howItWorks.tools.split.desc')}
-              </span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span>🔗</span>
-              <span>
-                <strong>{t('howItWorks.tools.merge.title')}:</strong> {t('howItWorks.tools.merge.desc')}
-              </span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span>🧽</span>
-              <span>
-                <strong>{t('howItWorks.tools.erase.title')}:</strong> {t('howItWorks.tools.erase.desc')}
-              </span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span>🔤</span>
-              <span>
-                <strong>{t('howItWorks.tools.font.title')}:</strong> {t('howItWorks.tools.font.desc')}
-              </span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span>🎨</span>
-              <span>
-                <strong>{t('howItWorks.tools.paint.title')}:</strong> {t('howItWorks.tools.paint.desc')}
-              </span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span>➕</span>
-              <span>
-                <strong>{t('howItWorks.tools.addActivity.title')}:</strong> {t('howItWorks.tools.addActivity.desc')}
-              </span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span>✋</span>
-              <span>
-                <strong>{t('howItWorks.tools.leaveTool.title')}:</strong> {t('howItWorks.tools.leaveTool.desc')}
-              </span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span>↩️</span>
-              <span>
-                <strong>{t('howItWorks.tools.undo.title')}:</strong> {t('howItWorks.tools.undo.desc')}
-              </span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span>↪️</span>
-              <span>
-                <strong>{t('howItWorks.tools.redo.title')}:</strong> {t('howItWorks.tools.redo.desc')}
-              </span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span>🔄</span>
-              <span>
-                <strong>{t('howItWorks.tools.reset.title')}:</strong> {t('howItWorks.tools.reset.desc')}
-              </span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span>
-                <span className="w-4 h-4 inline"><ArrowDownIcon /></span> Hora <span className="w-4 h-4 inline"><ArrowUpIcon /></span>
-              </span>
-              <span>
-                <strong>{t('howItWorks.tools.moveHours.title')}:</strong> {t('howItWorks.tools.moveHours.desc')}
-              </span>
-            </li>
-          </ul>
-
-          <p>{t('howItWorks.outro')}</p>
-        </div>
-      </div>
-    </div>
       )}
     </div>
   );
 }
+
