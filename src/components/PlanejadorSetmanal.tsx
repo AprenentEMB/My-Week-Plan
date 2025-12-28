@@ -136,10 +136,6 @@ export function PlanejadorSetmanal() {
                       valor={activitats[clau] || ''}
                       començarEdicio={començarEdicio}
                       guardarEdicio={guardarEdicio}
-                      style={{
-                        wordBreak: 'break-word',
-                        overflowWrap: 'break-word',
-                      }}
                     />
                   );
                 })}
