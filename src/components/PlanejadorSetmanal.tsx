@@ -7,6 +7,9 @@ import { RowHeader } from './RowHeader';
 import { textColorClassForBackground } from '../utils/text-color';
 import { diesSetmana } from '../const/dies-de-la-setmana';
 import { motion } from 'framer-motion';
+import type { ElementType } from 'react';
+
+
 
 export function PlanejadorSetmanal() {
   const hores = usePlanejadorStore(state => state.hores);
@@ -15,6 +18,7 @@ export function PlanejadorSetmanal() {
   const generalBackgroundColor = usePlanejadorStore(state => state.generalBackgroundColor);
   const setGeneralBackgroundColor = usePlanejadorStore(state => state.setGeneralBackgroundColor);
   const colorEscollitTemporal = usePlanejadorStore(state => state.colorEscollitTemporal);
+  const exportantPDF = usePlanejadorStore(state => state.exportantPDF); // ✅
 
   const { einaSeleccionada } = useEinesStore();
   const { handleDividir, handleUnir } = useHours();
@@ -51,7 +55,7 @@ export function PlanejadorSetmanal() {
     const rect = document.getElementById(`row-${row}`)?.getBoundingClientRect();
     if (!rect) return;
     const novaAltura = Math.max(30, e.clientY - rect.top);
-    setRowHeights(prev => ({ ...prev, [row]: novaAltura }));
+    setRowHeights(prev => ({ ...prev, [row]: Math.round(novaAltura) })); // ✅ arrodonim
   };
 
   const onMouseUp = () => {
@@ -67,10 +71,12 @@ export function PlanejadorSetmanal() {
     };
   }, []);
 
+  const RowComponent: ElementType = exportantPDF ? 'tr' : motion.tr; // ✅ tr pur durant export
+
   return (
     <div
       id="taula-horari"
-      className="w-full rounded-md shadow-lg p-2 sm:p-6 pb-20 mb-3 z-0 pdf-friendly"
+      className="w-full height-auto rounded-md shadow-lg p-2 sm:p-6 pb-20 mb-3 z-0 pdf-friendly"
       style={{ WebkitOverflowScrolling: 'touch', background: generalBackgroundColor }}
       onClick={() => {
         if (einaSeleccionada?.id === 'paint') {
@@ -79,12 +85,11 @@ export function PlanejadorSetmanal() {
       }}
     >
       <table
-        className="table-auto w-80%"
+        className="table-auto"
         style={{
           backgroundColor: generalBackgroundColor,
-          borderCollapse: 'separate',
-          borderSpacing: 0,
-          tableLayout: 'fixed', // columnes fixes
+          borderCollapse: 'collapse',
+          tableLayout: 'fixed',
         }}
         onClick={e => e.stopPropagation()}
       >
@@ -106,16 +111,19 @@ export function PlanejadorSetmanal() {
             ].join(' ');
 
             return (
-              <motion.tr
+              <RowComponent
                 key={hora}
                 id={`row-${hora}`}
-                initial={esFilaAnimant ? { opacity: 0, y: -20 } : undefined}
-                animate={{
-                  backgroundColor: esFilaAnimant ? '#f0f9ff' : 'transparent',
-                  opacity: esFilaAnimant ? 0.2 : 1,
-                }}
-                transition={{ duration: 0.5, ease: 'easeOut' }}
-                className="transition-colors duration-300 relative"
+                {...(!exportantPDF && {
+                  initial: esFilaAnimant ? { opacity: 0, y: -20 } : false,
+                  animate: {
+                    backgroundColor: esFilaAnimant ? '#f0f9ff' : 'transparent',
+                    opacity: esFilaAnimant ? 0.2 : 1,
+                    y: 0,
+                  },
+                  transition: { duration: 0.5, ease: 'easeOut' },
+                })}
+                className="relative"
                 style={{ height: rowHeights[hora], position: 'relative' }}
               >
                 <td
@@ -141,20 +149,22 @@ export function PlanejadorSetmanal() {
                 })}
 
                 {/* Drag handle invisible a tota la part inferior */}
-                <div
-                  style={{
-                    position: 'absolute',
-                    bottom: 0,
-                    left: 0,
-                    width: '100%',
-                    height: 8,
-                    cursor: 'row-resize',
-                    userSelect: 'none',
-                    pointerEvents: 'auto',
-                  }}
-                  onMouseDown={() => (resizingRowRef.current = hora)}
-                />
-              </motion.tr>
+                {!exportantPDF && (
+                  <div
+                    style={{
+                      position: 'absolute',
+                      bottom: 0,
+                      left: 0,
+                      width: '100%',
+                      height: 8,
+                      cursor: 'row-resize',
+                      userSelect: 'none',
+                      pointerEvents: 'auto',
+                    }}
+                    onMouseDown={() => (resizingRowRef.current = hora)}
+                  />
+                )}
+              </RowComponent>
             );
           })}
         </tbody>
@@ -162,6 +172,7 @@ export function PlanejadorSetmanal() {
     </div>
   );
 }
+
 
 /*
 

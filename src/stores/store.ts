@@ -17,6 +17,8 @@ interface PlanejadorState {
   rellotgeActiu?: boolean;
   pastStates: Partial<PlanejadorState>[];
   futureStates: Partial<PlanejadorState>[];
+  exportantPDF: boolean;
+setExportantPDF: (v: boolean) => void;
 
   // Funcions
   setActivitats: (clau: string, valor: string) => void;
@@ -48,6 +50,8 @@ export const usePlanejadorStore = create<PlanejadorState>()(
       pastStates: [],
       futureStates: [],
       rellotgeActiu: false,
+      exportantPDF: false,
+setExportantPDF: (v: boolean) => set({ exportantPDF: v }),
 
       // Funcions
       setActivitats: (clau, valor) => {

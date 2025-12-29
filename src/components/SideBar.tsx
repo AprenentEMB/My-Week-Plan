@@ -28,7 +28,7 @@ const tutorials: Tutorial[] = [
 
 export function SidebarLeft() {
   const { t } = useTranslation();
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(true);
 
   return (
     <Sidebar className={`transition-all duration-300 ${collapsed ? "w-26" : "w-80"}`}>
@@ -46,7 +46,7 @@ export function SidebarLeft() {
   <Button
     variant="outline"
     size="sm"
-    className="px-2 flex-shrink-0"
+    className="px-2 shrink-0"
     onClick={() => setCollapsed(!collapsed)}
   >
     {collapsed ? "→" : "←"}

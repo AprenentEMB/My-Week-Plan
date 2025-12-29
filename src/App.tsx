@@ -19,6 +19,7 @@ function App() {
     generalBackgroundColor,
     setColorEscollitTemporal,
     fontFamily,
+    exportantPDF 
   } = usePlanejadorStore();
   const { einaSeleccionada, setEinaSeleccionada } = useEinesStore();
 
@@ -99,18 +100,27 @@ function App() {
 
 
 
-      {/* ─── Taula del planificador ─── */}
-      <motion.div
-        className="w-full max-w-5xl mt-6 flex flex-col items-stretch sm:ml-0 min-w-0"
-        onClick={(e) => e.stopPropagation()}
-        variants={itemVariants as Variants}
-        transition={{ delay: 0.1 }}
-        style={{ WebkitOverflowScrolling: 'touch', background: generalBackgroundColor }}
-      >
-        <div className="w-full overflow-x-auto">
-          <PlanejadorSetmanal />
-        </div>
-      </motion.div>
+{/* ─── Taula del planificador ─── */}
+<motion.div
+  className={`w-full mt-6 flex flex-col items-stretch sm:ml-0 min-w-0 ${
+    exportantPDF ? 'max-w-none min-h-full' : 'max-w-5xl' // 👈 Si exportem, no hi ha límit
+  }`}
+  onClick={(e) => e.stopPropagation()}
+  variants={itemVariants as Variants}
+  transition={{ delay: 0.1 }}
+  style={{ 
+    WebkitOverflowScrolling: 'touch', 
+    background: generalBackgroundColor,
+    // Forcem que durant l'exportació el contingut dicti l'amplada
+    width: exportantPDF ? 'fit-content' : '100%',
+    minHeight: exportantPDF ? 'fit-content' : 'auto',
+    display: exportantPDF ? 'block' : 'table',
+  }}
+>
+  <div className={exportantPDF ? 'w-full' : 'w-full overflow-x-auto'}>
+    <PlanejadorSetmanal />
+  </div>
+</motion.div>
 
       {/* ─── Formulari d'activitats─── */}
       {einaSeleccionada?.id === 'form' && (
