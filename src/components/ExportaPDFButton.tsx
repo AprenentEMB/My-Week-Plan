@@ -115,7 +115,7 @@ const dataUrl = await domToImageWithTypes.toPng(node, options);
       size="sm"
       className="
   flex items-center gap-2
-  bg-indigo-600 hover:bg-indigo-700
+  bg-teal-600 hover:bg-teal-700
   text-white
   px-3 py-2
   rounded-md

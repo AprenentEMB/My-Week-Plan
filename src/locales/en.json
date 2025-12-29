@@ -97,13 +97,41 @@
     "title": "Quick Tutorials",
     "footer": "30s tutorials to quickly master the planner"
   },
-  "tutorial1": {
-    "title": "How to create an activity",
-    "desc": "Learn in 30s how to add an activity."
+   "tutorial1": {
+    "title": "1.Initial setup: language and time range",
+    "desc": "Learn how to select the application language and define the time range of your weekly schedule."
   },
   "tutorial2": {
-    "title": "Merging cells",
-    "desc": "Quick tutorial on merging cells."
+    "title": "2.Adding activities",
+    "desc": "Discover how to create and add activities easily using the form."
+  },
+  "tutorial3": {
+    "title": "3.Undo and redo actions",
+    "desc": "Learn how to use undo and redo features to quickly correct changes."
+  },
+  "tutorial4": {
+    "title": "4.Customizing cells with colors",
+    "desc": "Add color to cells to differentiate activities and improve readability."
+  },
+  "tutorial5": {
+    "title": "5.Changing the font",
+    "desc": "Learn how to select the font that best fits your schedule."
+  },
+  "tutorial6": {
+    "title": "6.Splitting time slots",
+    "desc": "Create time subdivisions, such as from 11:00 to 11:30, for more precise planning."
+  },
+  "tutorial7": {
+    "title": "7.Merging cells",
+    "desc": "Learn how to merge multiple cells to represent longer activities."
+  },
+  "tutorial8": {
+    "title": "8.Editing and resizing cells",
+    "desc": "Edit cell content and resize them by dragging to customize their size."
+  },
+  "tutorial9": {
+    "title": "9.Exporting the schedule to PDF",
+    "desc": "Download your schedule in PDF format to share or print it."
   },
     "language": {
       "label": "Language"

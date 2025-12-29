@@ -20,14 +20,69 @@ type Tutorial = {
 };
 
 const tutorials: Tutorial[] = [
-  { id: 'tut1', titol: 'tutorial1.title', descripcio: 'tutorial1.desc', url: 'https://player.vimeo.com/video/1150106468?h=714aba8d86&title=0&byline=0&portrait=0',thumbnail: '/1.png' },
-  { id: 'tut2', titol: 'tutorial2.title', descripcio: 'tutorial2.desc', url: 'https://player.vimeo.com/video/1150106494?h=1fba5f3510', thumbnail: '/2.png' },
-  { id: 'tut3', titol: 'tutorial3.title', descripcio: 'tutorial3.desc', url: 'https://player.vimeo.com/video/1150106510?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479', thumbnail: '/3.png' },
-  { id: 'tut4', titol: 'tutorial4.title', descripcio: 'tutorial4.desc', url: 'https://player.vimeo.com/video/1150106526?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479', thumbnail: '/4.png' },
-  { id: 'tut5', titol: 'tutorial5.title', descripcio: 'tutorial5.desc', url: 'https://player.vimeo.com/video/1150106540?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479', thumbnail: '/5.png' },
-  { id: 'tut6', titol: 'tutorial6.title', descripcio: 'tutorial6.desc', url: 'https://player.vimeo.com/video/1150106559?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479', thumbnail: '/6.png' },
-  { id: 'tut7', titol: 'tutorial7.title', descripcio: 'tutorial7.desc', url: 'https://player.vimeo.com/video/1150106575?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479', thumbnail: '/7.png' },
-  { id: 'tut8', titol: 'tutorial8.title', descripcio: 'tutorial8.desc', url: 'https://player.vimeo.com/video/1150106589?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479', thumbnail: '/8.png' }
+  {
+    id: 'tut1',
+    titol: 'tutorial1.title',
+    descripcio: 'tutorial1.desc',
+    url: 'https://player.vimeo.com/video/1150106468?h=714aba8d86&title=0&byline=0&portrait=0',
+    thumbnail: '/1.png',
+  },
+  {
+    id: 'tut2',
+    titol: 'tutorial2.title',
+    descripcio: 'tutorial2.desc',
+    url: 'https://player.vimeo.com/video/1150106494?h=1fba5f3510',
+    thumbnail: '/2.png',
+  },
+  {
+    id: 'tut3',
+    titol: 'tutorial3.title',
+    descripcio: 'tutorial3.desc',
+    url: 'https://player.vimeo.com/video/1150106510?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479',
+    thumbnail: '/3.png',
+  },
+  {
+    id: 'tut4',
+    titol: 'tutorial4.title',
+    descripcio: 'tutorial4.desc',
+    url: 'https://player.vimeo.com/video/1150106526?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479',
+    thumbnail: '/4.png',
+  },
+  {
+    id: 'tut5',
+    titol: 'tutorial5.title',
+    descripcio: 'tutorial5.desc',
+    url: 'https://player.vimeo.com/video/1150106540?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479',
+    thumbnail: '/5.png',
+  },
+  {
+    id: 'tut6',
+    titol: 'tutorial6.title',
+    descripcio: 'tutorial6.desc',
+    url: 'https://player.vimeo.com/video/1150106559?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479',
+    thumbnail: '/6.png',
+  },
+  {
+    id: 'tut7',
+    titol: 'tutorial7.title',
+    descripcio: 'tutorial7.desc',
+    url: 'https://player.vimeo.com/video/1150106575?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479',
+    thumbnail: '/7.png',
+  },
+  {
+    id: 'tut8',
+    titol: 'tutorial8.title',
+    descripcio: 'tutorial8.desc',
+    url: 'https://player.vimeo.com/video/1150106589?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479',
+    thumbnail: '/8.png',
+  },
+  {
+    id: 'tut9',
+    titol: 'tutorial9.title',
+    descripcio: 'tutorial9.desc',
+    url: 'https://player.vimeo.com/video/1150219856?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479',
+    thumbnail: '/9.png',
+  }
 ];
 
 export function SidebarLeft() {
@@ -47,7 +102,7 @@ export function SidebarLeft() {
     const timeoutId = setTimeout(() => {
       if (iframeRef.current) {
         const player = new Player(iframeRef.current);
-        
+
         player.on('ended', () => {
           setEnded(true);
         });
@@ -83,36 +138,38 @@ export function SidebarLeft() {
         </Button>
       </SidebarHeader>
 
-     <SidebarContent className="space-y-4 px-2 overflow-y-auto" style={{ maxHeight: 'calc(100vh - 6rem)' }}>
-  {tutorials.map(tut => (
-    <SidebarGroup key={tut.id} className={`space-y-2 ${collapsed ? 'hidden' : ''}`}>
-      <h3 className="font-medium text-sm">{t(tut.titol)}</h3>
-      <p className="text-xs text-gray-500">{t(tut.descripcio)}</p>
-
-      {/* Preview en comptes del botó */}
-      <div
-        className="relative w-full aspect-video rounded overflow-hidden cursor-pointer transform transition-transform duration-200 hover:scale-105"
-        onClick={() => {
-          setActiveTutorial(tut);
-          setEnded(false);
-          setOpen(true);
-        }}
+      <SidebarContent
+        className="space-y-4 px-2 overflow-y-auto"
+        style={{ maxHeight: 'calc(100vh - 6rem)' }}
       >
-        <img
-          src={tut.thumbnail}
-          alt={t(tut.titol)}
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 flex items-center justify-center bg-black/20">
-          <svg className="w-12 h-12 text-white animate-pulse" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M8 5v14l11-7z" />
-          </svg>
-        </div>
-      </div>
-    </SidebarGroup>
-  ))}
-</SidebarContent>
+        {tutorials.map(tut => (
+          <SidebarGroup key={tut.id} className={`space-y-2 ${collapsed ? 'hidden' : ''}`}>
+            <h3 className="font-medium text-sm">{t(tut.titol)}</h3>
+            <p className="text-xs text-gray-500">{t(tut.descripcio)}</p>
 
+            {/* Preview en comptes del botó */}
+            <div
+              className="relative w-full aspect-video rounded overflow-hidden cursor-pointer transform transition-transform duration-200 hover:scale-105"
+              onClick={() => {
+                setActiveTutorial(tut);
+                setEnded(false);
+                setOpen(true);
+              }}
+            >
+              <img src={tut.thumbnail} alt={t(tut.titol)} className="w-full h-full object-cover" />
+              <div className="absolute inset-0 flex items-center justify-center bg-black/20">
+                <svg
+                  className="w-12 h-12 text-white animate-pulse"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+              </div>
+            </div>
+          </SidebarGroup>
+        ))}
+      </SidebarContent>
 
       <Dialog
         open={open}
@@ -145,8 +202,8 @@ export function SidebarLeft() {
                 {ended && (
                   <div className="absolute inset-0 bg-black/90 flex flex-col items-center justify-center z-50 transition-opacity duration-300">
                     <p className="text-white mb-6 text-lg font-medium">Has acabat el tutorial</p>
-                    <Button 
-                      variant="secondary" 
+                    <Button
+                      variant="secondary"
                       size="lg"
                       onClick={() => setOpen(false)}
                       className="cursor-pointer"

@@ -73,9 +73,21 @@ function App() {
       animate="visible"
     >
       <SidebarLeft />
-      <div className="w-full max-w-5xl flex justify-end mt-4 sm:ml-16">
-        <LanguageSelector />
-      </div>
+      <div className="w-full max-w-5xl flex items-center justify-between mt-4 sm:ml-16 px-2">
+  {/* Branding */}
+  <motion.h1
+    className="text-2xl sm:text-3xl text-gray-900 font-semibold"
+    initial={{ opacity: 0, x: -24 }}
+    animate={{ opacity: 1, x: 0 }}
+    transition={{ duration: 0.45, ease: 'easeOut' }}
+  >
+    Week<span className="text-teal-600">Me</span>
+
+  </motion.h1>
+
+  {/* Selector d'idioma */}
+  <LanguageSelector />
+</div>
       {einaSeleccionada && iconsForCursor.includes(einaSeleccionada.id) && <CursorFlotant />}
 
       {/* ─── Barra superior amb eines i exportació ─── */}

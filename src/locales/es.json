@@ -97,13 +97,41 @@
     "title": "Tutoriales Rápidos",
     "footer": "Tutoriales de 30s para dominar rápidamente el planificador"
   },
-  "tutorial1": {
-    "title": "Cómo crear una actividad",
-    "desc": "Aprende en 30s cómo añadir una actividad."
+   "tutorial1": {
+    "title": "1.Configuración inicial: idioma y rango horario",
+    "desc": "Aprende a seleccionar el idioma de la aplicación y definir el rango horario de tu horario semanal."
   },
   "tutorial2": {
-    "title": "Fusionar celdas",
-    "desc": "Tutorial rápido sobre fusionar celdas."
+    "title": "Añadir actividades",
+    "desc": "Descubre cómo crear y añadir actividades fácilmente usando el formulario."
+  },
+  "tutorial3": {
+    "title": "3.Deshacer y rehacer acciones",
+    "desc": "Aprende a usar las funciones de deshacer y rehacer para corregir cambios rápidamente."
+  },
+  "tutorial4": {
+    "title": "4.Personalizar celdas con colores",
+    "desc": "Añade color a las celdas para diferenciar actividades y mejorar la visualización."
+  },
+  "tutorial5": {
+    "title": "5.Cambiar la tipografía",
+    "desc": "Aprende a seleccionar la fuente que mejor se adapte a tu horario."
+  },
+  "tutorial6": {
+    "title": "6.Dividir franjas horarias",
+    "desc": "Crea subdivisiones de horas, como de 11:00 a 11:30, para una planificación más precisa."
+  },
+  "tutorial7": {
+    "title": "7.Unir celdas",
+    "desc": "Aprende a unir varias celdas para representar actividades largas."
+  },
+  "tutorial8": {
+    "title": "8.Editar y redimensionar celdas",
+    "desc": "Modifica el contenido de las celdas y ajusta su tamaño arrastrándolas."
+  },
+  "tutorial9": {
+    "title": "9.Exportar el horario a PDF",
+    "desc": "Descarga tu horario en formato PDF para compartirlo o imprimirlo."
   },
   "language": {
     "label": "Idioma"

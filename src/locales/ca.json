@@ -98,14 +98,42 @@
     "footer": "Tutorials de 30s per dominar ràpidament el planificador"
   },
   "tutorial1": {
-    "title": "Com crear una activitat",
-    "desc": "Aprèn en 30s com afegir una activitat."
+    "title": "1.Configuració inicial: idioma i horari",
+    "desc": "Aprèn a seleccionar l’idioma de l’aplicació i definir el rang horari del teu horari setmanal."
   },
   "tutorial2": {
-    "title": "Fusionar cel·les",
-    "desc": "Tutorial ràpid sobre fusionar cel·les."
+    "title": "2.Afegir activitats",
+    "desc": "Descobreix com crear i afegir activitats fàcilment mitjançant el formulari."
   },
-    "language": {
+  "tutorial3": {
+    "title": "3.Desfer i refer accions",
+    "desc": "Aprèn a utilitzar les funcions d’undo i redo per corregir canvis ràpidament."
+  },
+  "tutorial4": {
+    "title": "4.Personalitzar cel·les amb colors",
+    "desc": "Dona color a les cel·les per diferenciar activitats i millorar la visualització."
+  },
+  "tutorial5": {
+    "title": "5.Canviar la tipografia",
+    "desc": "Aprèn a seleccionar la font que millor s’adapti al teu horari."
+  },
+  "tutorial6": {
+    "title": "6.Dividir franges horàries",
+    "desc": "Crea subdivisions d’hores, com ara de 11:00 a 11:30, per a una planificació més precisa."
+  },
+  "tutorial7": {
+    "title": "7.Unir cel·les",
+    "desc": "Aprèn a unir diverses cel·les per representar activitats llargues."
+  },
+  "tutorial8": {
+    "title": "8.Editar i redimensionar cel·les",
+    "desc": "Modifica el contingut de les cel·les i ajusta’n la mida arrossegant-les."
+  },
+  "tutorial9": {
+    "title": "9.Exportar l’horari a PDF",
+    "desc": "Descarrega el teu horari en format PDF per compartir-lo o imprimir-lo."
+  },
+  "language": {
     "label": "Idioma"
   }
 
