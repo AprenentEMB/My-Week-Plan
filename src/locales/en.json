@@ -24,6 +24,7 @@
     "sunday": "Sunday"
   },
   "form": {
+    "days": "Days",
     "activityName": "Activity Name",
     "startTime": "Start Time",
     "endTime": "End Time",

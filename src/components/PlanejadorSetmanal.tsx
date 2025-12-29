@@ -163,12 +163,6 @@ export function PlanejadorSetmanal() {
   );
 }
 
-
-
-
-
-
-
 /*
 
 Que el pdf s'exporti bé i que es vegin les ralles de les celes amb el fons blanc

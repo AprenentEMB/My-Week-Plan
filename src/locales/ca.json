@@ -24,6 +24,7 @@
     "sunday": "Diumenge"
   },
   "form": {
+    "days": "Dies",
     "activityName": "Nom de l'activitat",
     "startTime": "Hora d'inici",
     "endTime": "Hora de finalització",

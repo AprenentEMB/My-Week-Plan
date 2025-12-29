@@ -69,7 +69,7 @@ export function FormulariActivitat() {
     >
       {/* Dies de la setmana */}
       <div className="flex flex-col">
-        <label className="text-sm font-medium mb-1">{t("form.days", "Dies")}</label>
+        <label className="text-sm font-medium mb-1 text-gray-300">{t("form.days", "Dies")}</label>
         <div className="flex flex-wrap gap-2 md:gap-3">
           {diesSetmana.map(d => (
             <label
@@ -96,11 +96,11 @@ export function FormulariActivitat() {
 
       {/* Hora inici */}
       <div className="flex flex-col">
-        <label className="text-sm font-medium mb-1">{t("form.startTime", "Hora d'inici")}</label>
+        <label className="text-sm font-medium mb-1 text-white">{t("form.startTime", "Hora d'inici")}</label>
         <select
           value={horaInici}
           onChange={e => setHoraInici(e.target.value)}
-          className="border p-2 rounded"
+          className="border p-2 rounded text-white"
         >
           {hores.map(h => (
             <option key={h} value={h}>
@@ -111,7 +111,7 @@ export function FormulariActivitat() {
       </div>
 
       {/* Hora final */}
-      <div className="flex flex-col">
+      <div className="flex flex-col text-white">
         <label className="text-sm font-medium mb-1">{t("form.endTime", "Hora de finalització")}</label>
         <select
           value={horaFi}
@@ -127,7 +127,7 @@ export function FormulariActivitat() {
       </div>
 
       {/* Activitat */}
-      <div className="flex flex-col flex-1 min-w-[200px]">
+      <div className="flex flex-col flex-1 min-w-[200px] text-white">
         <label className="text-sm font-medium mb-1">{t("form.activityName", "Nom de l'activitat")}</label>
         <input
           type="text"

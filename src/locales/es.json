@@ -24,6 +24,7 @@
     "sunday": "Domingo"
   },
   "form": {
+    "days": "Días",
     "activityName": "Nombre de la actividad",
     "startTime": "Hora de inicio",
     "endTime": "Hora de finalización",
