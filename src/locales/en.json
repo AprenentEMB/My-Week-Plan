@@ -133,6 +133,11 @@
     "title": "9.Exporting the schedule to PDF",
     "desc": "Download your schedule in PDF format to share or print it."
   },
+  "modal": {
+    "export_done": "Export done!",
+    "support_message": "If WeekMe helped you plan your week, you can support the project by buying me a coffee",
+    "buy_coffee": "Buy me a coffee"
+  },
     "language": {
       "label": "Language"
     }

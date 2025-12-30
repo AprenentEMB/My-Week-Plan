@@ -11,6 +11,7 @@ import type { Variants } from 'framer-motion';
 import { containerVariants, itemVariants } from './const/animations';
 import { LanguageSelector } from './components/LanguageSelector';
 import { SidebarLeft } from './components/SideBar';
+import { CoffeeModal } from './components/CoffeModal';
 
 function App() {
   const {
@@ -24,6 +25,7 @@ function App() {
   const { einaSeleccionada, setEinaSeleccionada } = useEinesStore();
 
   const [isMobilePortrait, setIsMobilePortrait] = useState(false);
+  const [coffeeModalVisible, setCoffeeModalVisible] = useState(false);
 
   useEffect(() => {
     const checkOrientation = () => {
@@ -109,7 +111,7 @@ function App() {
         background: generalBackgroundColor,
       }}
     >
-      <div className="flex items-center gap-2 min-w-max px-2 sm:pl-16">
+      <div className="flex items-center gap-2 min-w-max px-2 sm:pl-12">
         <Eines />
       </div>
 
@@ -121,8 +123,10 @@ function App() {
         <ExportaPDFButton
           targetId="taula-horari"
           fileName="HorariSetmanal.pdf"
+          setCoffeeModalVisible={setCoffeeModalVisible}
         />
       </motion.div>
+      <CoffeeModal visible={coffeeModalVisible} onClose={() => setCoffeeModalVisible(false)} />
     </motion.div>
 
     {/* ─── Taula planificador ─── */}

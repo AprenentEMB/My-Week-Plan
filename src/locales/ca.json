@@ -133,6 +133,12 @@
     "title": "9.Exportar l’horari a PDF",
     "desc": "Descarrega el teu horari en format PDF per compartir-lo o imprimir-lo."
   },
+   "modal": {
+    "export_done": "Exportació completada!",
+    "support_message": "Si WeekMe t’ha ajudat a planificar la setmana, pots donar suport al projecte comprant-me un cafè",
+    "buy_coffee": "Compra’m un cafè"
+  },
+
   "language": {
     "label": "Idioma"
   }
