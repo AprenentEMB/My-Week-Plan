@@ -73,104 +73,115 @@ export function PlanejadorSetmanal() {
 
   const RowComponent: ElementType = exportantPDF ? 'tr' : motion.tr; // ✅ tr pur durant export
 
-  return (
-    <div
-      id="taula-horari"
-      className="w-full height-auto rounded-md shadow-lg p-2 sm:p-6 pb-20 mb-3 z-0 pdf-friendly"
-      style={{ WebkitOverflowScrolling: 'touch', background: generalBackgroundColor }}
-      onClick={() => {
-        if (einaSeleccionada?.id === 'paint') {
-          setGeneralBackgroundColor(colorEscollitTemporal || 'white');
-        }
+ return (
+  <div
+    id="taula-horari"
+    className="
+      w-full height-auto rounded-md shadow-lg
+      p-2 sm:p-6 pb-20 mb-3 z-0 pdf-friendly
+      overflow-x-auto sm:overflow-visible
+    "
+    style={{
+      WebkitOverflowScrolling: 'touch',
+      background: generalBackgroundColor,
+    }}
+    onClick={() => {
+      if (einaSeleccionada?.id === 'paint') {
+        setGeneralBackgroundColor(colorEscollitTemporal || 'white');
+      }
+    }}
+  >
+    <table
+      className="table-auto min-w-[700px] sm:min-w-0"
+      style={{
+        backgroundColor: generalBackgroundColor,
+        borderCollapse: 'collapse',
+        tableLayout: 'fixed',
       }}
+      onClick={e => e.stopPropagation()}
     >
-      <table
-        className="table-auto"
-        style={{
-          backgroundColor: generalBackgroundColor,
-          borderCollapse: 'collapse',
-          tableLayout: 'fixed',
-        }}
-        onClick={e => e.stopPropagation()}
-      >
-        <thead>
-          <RowHeader />
-        </thead>
-        <tbody>
-          {hores.map(hora => {
-            const esFilaAnimant = animantFila === hora;
-            const textColorClass = textColorClassForBackground(generalBackgroundColor);
+      <thead>
+        <RowHeader />
+      </thead>
 
-            const horaClasses = [
-              'p-1 sm:p-2',
-              'text-xs sm:text-sm md:text-base',
-              'font-medium',
-              'cursor-pointer',
-              textColorClass,
-              'bg-transparent bord',
-            ].join(' ');
+      <tbody>
+        {hores.map(hora => {
+          const esFilaAnimant = animantFila === hora;
+          const textColorClass = textColorClassForBackground(generalBackgroundColor);
 
-            return (
-              <RowComponent
-                key={hora}
-                id={`row-${hora}`}
-                {...(!exportantPDF && {
-                  initial: esFilaAnimant ? { opacity: 0, y: -20 } : false,
-                  animate: {
-                    backgroundColor: esFilaAnimant ? '#f0f9ff' : 'transparent',
-                    opacity: esFilaAnimant ? 0.2 : 1,
-                    y: 0,
-                  },
-                  transition: { duration: 0.5, ease: 'easeOut' },
-                })}
-                className="relative"
-                style={{ height: rowHeights[hora], position: 'relative' }}
+          const horaClasses = [
+            'p-1 sm:p-2',
+            'text-xs sm:text-sm md:text-base',
+            'font-medium',
+            'cursor-pointer',
+            textColorClass,
+            'bg-transparent',
+            'sticky left-0 sm:static',
+            'z-10',
+          ].join(' ');
+
+          return (
+            <RowComponent
+              key={hora}
+              id={`row-${hora}`}
+              {...(!exportantPDF && {
+                initial: esFilaAnimant ? { opacity: 0, y: -20 } : false,
+                animate: {
+                  backgroundColor: esFilaAnimant ? '#f0f9ff' : 'transparent',
+                  opacity: esFilaAnimant ? 0.2 : 1,
+                  y: 0,
+                },
+                transition: { duration: 0.5, ease: 'easeOut' },
+              })}
+              className="relative"
+              style={{ height: rowHeights[hora], position: 'relative' }}
+            >
+              <td
+                className={horaClasses}
+                onClick={() => handleJoinOrDivide(hora)}
+                title="Fes clic per aplicar l’eina seleccionada"
+                style={{ background: generalBackgroundColor }}
               >
-                <td
-                  className={horaClasses}
-                  onClick={() => handleJoinOrDivide(hora)}
-                  title="Fes clic per aplicar l’eina seleccionada"
-                >
-                  {hora}
-                </td>
+                {hora}
+              </td>
 
-                {diesSetmana.map(dia => {
-                  const clau = `${dia}-${hora}`;
-                  return (
-                    <Cella
-                      key={clau}
-                      clau={clau}
-                      estaEditant={editant === clau}
-                      valor={activitats[clau] || ''}
-                      començarEdicio={començarEdicio}
-                      guardarEdicio={guardarEdicio}
-                    />
-                  );
-                })}
-
-                {/* Drag handle invisible a tota la part inferior */}
-                {!exportantPDF && (
-                  <div
-                    style={{
-                      position: 'absolute',
-                      bottom: 0,
-                      left: 0,
-                      width: '100%',
-                      height: 8,
-                      cursor: 'row-resize',
-                      userSelect: 'none',
-                      pointerEvents: 'auto',
-                    }}
-                    onMouseDown={() => (resizingRowRef.current = hora)}
+              {diesSetmana.map(dia => {
+                const clau = `${dia}-${hora}`;
+                return (
+                  <Cella
+                    key={clau}
+                    clau={clau}
+                    estaEditant={editant === clau}
+                    valor={activitats[clau] || ''}
+                    començarEdicio={començarEdicio}
+                    guardarEdicio={guardarEdicio}
                   />
-                )}
-              </RowComponent>
-            );
-          })}
-        </tbody>
-      </table>
-    </div>
-  );
+                );
+              })}
+
+              {!exportantPDF && (
+                <div
+                  style={{
+                    position: 'absolute',
+                    bottom: 0,
+                    left: 0,
+                    width: '100%',
+                    height: 8,
+                    cursor: 'row-resize',
+                    userSelect: 'none',
+                    pointerEvents: 'auto',
+                  }}
+                  onMouseDown={() => (resizingRowRef.current = hora)}
+                />
+              )}
+            </RowComponent>
+          );
+        })}
+      </tbody>
+    </table>
+  </div>
+);
+
 }
 
 
