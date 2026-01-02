@@ -97,7 +97,7 @@
     "title": "Tutoriales Rápidos",
     "footer": "Tutoriales de 30s para dominar rápidamente el planificador"
   },
-   "tutorial1": {
+  "tutorial1": {
     "title": "1.Configuración inicial: idioma y rango horario",
     "desc": "Aprende a seleccionar el idioma de la aplicación y definir el rango horario de tu horario semanal."
   },
@@ -138,8 +138,20 @@
     "support_message": "Si WeekMe te ayudó a planificar tu semana, puedes apoyar el proyecto comprándome un café",
     "buy_coffee": "Cómprame un café"
   },
+  "seo": {
+    "title": "Crea horarios escolares en minutos | WeekMe",
+    "description": "Herramienta online para profesores para crear horarios escolares claros, personalizables y exportables en PDF."
+  },
+  "hero": {
+    "title": "Crea horarios escolares en minutos",
+    "highlight": "en minutos",
+    "resum": "Una herramienta sencilla para profesores, con colores y exportación PDF.",
+    "subtitle": "Personaliza franjas, asignaturas y exporta tu horario en PDF listo para imprimir o compartir con alumnos.",
+    "meta": "No se requiere registro · Exportación a PDF · Gratis",
+    "show": "Ver más información",
+    "hide": "Ocultar información"
+  },
   "language": {
     "label": "Idioma"
   }
 }
-

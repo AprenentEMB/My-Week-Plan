@@ -138,6 +138,19 @@
     "support_message": "If WeekMe helped you plan your week, you can support the project by buying me a coffee",
     "buy_coffee": "Buy me a coffee"
   },
+  "seo": {
+    "title": "Create school schedules in minutes | WeekMe",
+    "description": "Online tool for teachers to create clear, customizable school schedules and export them to PDF."
+  },
+ "hero": {
+  "title": "Create clear school schedules",
+  "highlight": "in minutes",
+  "resum": "A simple tool for teachers, with colors and PDF export.",
+  "subtitle": "Customize time slots, subjects, and export your schedule as a ready-to-print PDF to share with students.",
+  "meta": "No signup · PDF export · Free",
+  "show": "Show more information",
+  "hide": "Hide information"
+},
     "language": {
       "label": "Language"
     }

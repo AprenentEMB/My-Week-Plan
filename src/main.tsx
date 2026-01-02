@@ -4,11 +4,14 @@ import './index.css';
 import App from './App.tsx';
 import './i18n';
 import { SidebarProvider } from './components/ui/sidebar'
+import { HelmetProvider } from 'react-helmet-async';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <SidebarProvider>
-      <App />
+      <HelmetProvider>
+        <App />
+      </HelmetProvider>
     </SidebarProvider>
   </StrictMode>
 );

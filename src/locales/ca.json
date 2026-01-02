@@ -138,7 +138,19 @@
     "support_message": "Si WeekMe t’ha ajudat a planificar la setmana, pots donar suport al projecte comprant-me un cafè",
     "buy_coffee": "Compra’m un cafè"
   },
-
+  "seo": {
+    "title": "Crea horaris escolars en minuts | WeekMe",
+    "description": "Eina online per a professors per crear horaris escolars clars, personalitzables i exportables en PDF."
+  },
+  "hero": {
+  "title": "Crea horaris escolars clars",
+  "highlight": "en minuts",
+  "resum": "Una eina senzilla per professors, amb colors i exportació PDF.",
+  "subtitle": "Personalitza franges, assignatures i exporta el teu horari en PDF llest per imprimir o compartir amb alumnes.",
+  "meta": "No cal registre · Exportació en PDF · Gratis",
+  "show": "Veure més informació",
+  "hide": "Amagar informació"
+},
   "language": {
     "label": "Idioma"
   }
