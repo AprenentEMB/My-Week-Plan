@@ -153,8 +153,8 @@ function App() {
           <CoffeeModal visible={coffeeModalVisible} onClose={() => setCoffeeModalVisible(false)} />
         </motion.div>
 
-        {/* ─── Taula planificador ─── */}
-        <div className="w-full flex justify-center pl-0 md:pl-26 xl:pl-0">
+ {/* ─── Taula planificador ─── */}
+<div className="w-full flex justify-center pl-0 md:pl-26 xl:pl-0">
   <motion.div
     className={`w-full mt-6 flex flex-col items-stretch min-w-0 ${
       exportantPDF ? 'max-w-none min-h-full' : 'max-w-5xl'
@@ -165,18 +165,20 @@ function App() {
     style={{
       WebkitOverflowScrolling: 'touch',
       background: generalBackgroundColor,
-      width: exportantPDF ? 'fit-content' : '100%',
+      width: '100%',
       minHeight: exportantPDF ? 'fit-content' : 'auto',
-      display: exportantPDF ? 'block' : 'flex',
+      display: 'flex',
     }}
   >
-    <div className="w-full overflow-x-auto sm:overflow-visible">
-      <div className="min-w-[900px]">
+    {/* ⚡ Només a mòbil: envoltem la taula amb overflow-x-auto */}
+    <div className="w-full sm:overflow-visible overflow-x-auto">
+      <div className="min-w-[900px] sm:min-w-0">
         <PlanejadorSetmanal />
       </div>
     </div>
   </motion.div>
 </div>
+
       </div>
 
       {/* ─── Formulari activitats ─── */}

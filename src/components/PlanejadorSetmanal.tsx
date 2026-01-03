@@ -79,7 +79,7 @@ export function PlanejadorSetmanal() {
     className="
       w-full height-auto rounded-md shadow-lg
       p-2 sm:p-6 pb-20 mb-3 z-0 pdf-friendly
-      overflow-x-auto sm:overflow-visible
+      overflow-x-auto overflow-y-auto sm:overflow-visible
     "
     style={{
       WebkitOverflowScrolling: 'touch',
