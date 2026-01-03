@@ -69,9 +69,12 @@ function App() {
   return (
     <motion.div
       className="
-  flex flex-col w-full px-3 sm:px-8 items-center min-h-screen
-  overflow-x-auto sm:overflow-x-hidden
-"
+        flex flex-col w-full min-h-screen
+        px-3 sm:px-8
+        items-start sm:items-center
+        overflow-x-auto overflow-y-auto
+        sm:overflow-x-hidden
+      "
       style={{
         background: generalBackgroundColor ?? undefined,
         fontFamily: fontFamily ?? undefined,
@@ -81,98 +84,100 @@ function App() {
       initial="hidden"
       animate="visible"
     >
-      {/* ─── Header / Branding ─── */}
-      <div className="w-full max-w-5xl flex items-center justify-between mt-4 px-2 sm:ml-16">
-        <motion.h1
-          className="text-xl sm:text-3xl text-gray-900 font-semibold whitespace-nowrap"
-          initial={{ opacity: 0, x: -24 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.45, ease: 'easeOut' }}
-        >
-          Week<span className="text-teal-600">Me</span>Pro
-        </motion.h1>
-
-        <LanguageSelector />
-      </div>
-
       {/* Sidebar (no afecta mòbil) */}
       <SidebarLeft />
 
-      <Helmet>
-        <html lang={i18n.language} />
-        <title>{t('seo.title')}</title>
+      {/* ─── Contingut principal ─── */}
+      <div className="w-full flex flex-col items-start sm:items-center">
 
-        <meta name="description" content={t('seo.description')} />
-
-        <meta property="og:title" content={t('seo.title')} />
-        <meta property="og:description" content={t('seo.description')} />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://weekmepro.com" />
-
-        <link rel="canonical" href="https://weekmepro.com" />
-      </Helmet>
-
-      <Hero />
-      <h1 className="sr-only">{t('seo.title')}</h1>
-
-      {/* Cursor flotant */}
-      {einaSeleccionada && iconsForCursor.includes(einaSeleccionada.id) && <CursorFlotant />}
-
-      {/* ─── Barra superior d’eines ─── */}
-      <motion.div
-        className="
-        w-full max-w-6xl mt-4
-        flex items-start gap-3
-        overflow-x-auto sm:overflow-x-visible
-        px-1
-      "
-        onClick={e => e.stopPropagation()}
-        variants={itemVariants as Variants}
-        style={{
-          minHeight: '7rem',
-          background: generalBackgroundColor,
-        }}
-      >
-        <div className="flex items-center gap-2 min-w-max px-2 sm:pl-16">
-          <Eines />
+        {/* Header / Branding */}
+        <div className="w-full max-w-5xl flex items-center justify-between mt-4 px-2 sm:ml-16">
+          <motion.h1
+            className="text-xl sm:text-3xl text-gray-900 font-semibold whitespace-nowrap"
+            initial={{ opacity: 0, x: -24 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.45, ease: 'easeOut' }}
+          >
+            Week<span className="text-teal-600">Me</span>Pro
+          </motion.h1>
+          <LanguageSelector />
         </div>
 
+        <Helmet>
+          <html lang={i18n.language} />
+          <title>{t('seo.title')}</title>
+          <meta name="description" content={t('seo.description')} />
+          <meta property="og:title" content={t('seo.title')} />
+          <meta property="og:description" content={t('seo.description')} />
+          <meta property="og:type" content="website" />
+          <meta property="og:url" content="https://weekmepro.com" />
+          <link rel="canonical" href="https://weekmepro.com" />
+        </Helmet>
+
+        <Hero />
+        <h1 className="sr-only">{t('seo.title')}</h1>
+
+        {/* Cursor flotant */}
+        {einaSeleccionada && iconsForCursor.includes(einaSeleccionada.id) && <CursorFlotant />}
+
+        {/* Barra superior d’eines */}
         <motion.div
-          className="shrink-0 mr-2 sm:mr-20"
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
+          className="
+            w-full max-w-6xl mt-4
+            flex items-start gap-3
+            overflow-x-auto sm:overflow-x-visible
+            px-1
+          "
+          onClick={e => e.stopPropagation()}
+          variants={itemVariants as Variants}
+          style={{
+            minHeight: '7rem',
+            background: generalBackgroundColor,
+          }}
         >
-          <ExportaPDFButton
-            targetId="taula-horari"
-            fileName="WeekMePro.pdf"
-            setCoffeeModalVisible={setCoffeeModalVisible}
-          />
-        </motion.div>
-        <CoffeeModal visible={coffeeModalVisible} onClose={() => setCoffeeModalVisible(false)} />
-      </motion.div>
-
-      {/* ─── Taula planificador ─── */}
-      <motion.div
-        className={`w-full mt-6 flex flex-col items-stretch min-w-0 ${
-          exportantPDF ? 'max-w-none min-h-full' : 'max-w-5xl'
-        }`}
-        onClick={e => e.stopPropagation()}
-        variants={itemVariants as Variants}
-        transition={{ delay: 0.1 }}
-        style={{
-          WebkitOverflowScrolling: 'touch',
-          background: generalBackgroundColor,
-          width: exportantPDF ? 'fit-content' : '100%',
-          minHeight: exportantPDF ? 'fit-content' : 'auto',
-          display: exportantPDF ? 'block' : 'flex',
-        }}
-      >
-        <div className="w-full overflow-x-auto sm:overflow-visible">
-          <div className="min-w-[900px]">
-            <PlanejadorSetmanal />
+          <div className="flex items-center gap-2 min-w-max px-2 sm:pl-16">
+            <Eines />
           </div>
-        </div>
-      </motion.div>
+
+          <motion.div
+            className="shrink-0 mr-2 sm:mr-20"
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+          >
+            <ExportaPDFButton
+              targetId="taula-horari"
+              fileName="WeekMePro.pdf"
+              setCoffeeModalVisible={setCoffeeModalVisible}
+            />
+          </motion.div>
+          <CoffeeModal visible={coffeeModalVisible} onClose={() => setCoffeeModalVisible(false)} />
+        </motion.div>
+
+        {/* ─── Taula planificador ─── */}
+        <div className="w-full flex justify-center pl-0 md:pl-26 xl:pl-0">
+  <motion.div
+    className={`w-full mt-6 flex flex-col items-stretch min-w-0 ${
+      exportantPDF ? 'max-w-none min-h-full' : 'max-w-5xl'
+    }`}
+    onClick={e => e.stopPropagation()}
+    variants={itemVariants as Variants}
+    transition={{ delay: 0.1 }}
+    style={{
+      WebkitOverflowScrolling: 'touch',
+      background: generalBackgroundColor,
+      width: exportantPDF ? 'fit-content' : '100%',
+      minHeight: exportantPDF ? 'fit-content' : 'auto',
+      display: exportantPDF ? 'block' : 'flex',
+    }}
+  >
+    <div className="w-full overflow-x-auto sm:overflow-visible">
+      <div className="min-w-[900px]">
+        <PlanejadorSetmanal />
+      </div>
+    </div>
+  </motion.div>
+</div>
+      </div>
 
       {/* ─── Formulari activitats ─── */}
       {einaSeleccionada?.id === 'form' && (
@@ -207,3 +212,4 @@ function App() {
 }
 
 export default App;
+
