@@ -91,15 +91,15 @@ export function PlanejadorSetmanal() {
       }
     }}
   >
-    <table
-      className="table-auto min-w-[700px] sm:min-w-0"
-      style={{
-        backgroundColor: generalBackgroundColor,
-        borderCollapse: 'collapse',
-        tableLayout: 'fixed',
-      }}
-      onClick={e => e.stopPropagation()}
-    >
+   <table
+  className="table-auto sm:min-w-[700px]"
+  style={{
+    backgroundColor: generalBackgroundColor,
+    borderCollapse: 'collapse',
+    tableLayout: 'fixed',
+  }}
+  onClick={e => e.stopPropagation()}
+>
       <thead>
         <RowHeader />
       </thead>
