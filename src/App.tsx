@@ -60,15 +60,18 @@ function App() {
   if (isMobilePortrait) {
     return (
       <div className="flex flex-col items-center justify-center h-screen bg-gray-900 text-white text-center px-6">
-        <p className="text-lg font-semibold mb-3">📱 Gira el dispositiu</p>
-        <p className="text-sm text-gray-300">Aquesta aplicació es veu millor en horitzontal.</p>
+        <p className="text-lg font-semibold mb-3">📱 Please rotate your device</p>
+        <p className="text-sm text-gray-300">WeekMePro works better in landscape mode.</p>
       </div>
     );
   }
 
   return (
     <motion.div
-      className="flex flex-col w-full px-3 sm:px-8 items-center min-h-screen overflow-x-hidden"
+      className="
+  flex flex-col w-full px-3 sm:px-8 items-center min-h-screen
+  overflow-x-auto sm:overflow-x-hidden
+"
       style={{
         background: generalBackgroundColor ?? undefined,
         fontFamily: fontFamily ?? undefined,
@@ -165,7 +168,9 @@ function App() {
         }}
       >
         <div className="w-full overflow-x-auto sm:overflow-visible">
-          <PlanejadorSetmanal />
+          <div className="min-w-[900px]">
+            <PlanejadorSetmanal />
+          </div>
         </div>
       </motion.div>
 

@@ -97,7 +97,7 @@
     "title": "Quick Tutorials",
     "footer": "30s tutorials to quickly master the planner"
   },
-   "tutorial1": {
+  "tutorial1": {
     "title": "1.Initial setup: language and time range",
     "desc": "Learn how to select the application language and define the time range of your weekly schedule."
   },
@@ -142,19 +142,17 @@
     "title": "Create school schedules in minutes | WeekMe",
     "description": "Online tool for teachers to create clear, customizable school schedules and export them to PDF."
   },
- "hero": {
-  "title": "Create clear school schedules",
-  "highlight": "in minutes",
-  "resum": "A simple tool for teachers, with colors and PDF export.",
-  "subtitle": "Customize time slots, subjects, and export your schedule as a ready-to-print PDF to share with students.",
-  "meta": "No signup · PDF export · Free",
-  "show": "Show more information",
-  "hide": "Hide information"
-},
-    "language": {
-      "label": "Language"
-    },
-    "exportPdf": "Export PDF"
+  "hero": {
+    "title": "Create clear school schedules",
+    "highlight": "in minutes",
+    "resum": "A simple tool for teachers, with colors and PDF export.",
+    "subtitle": "Customize time slots, subjects, and export your schedule as a ready-to-print PDF to share with students.",
+    "meta": "No signup · PDF export · Free",
+    "show": "Show more information",
+    "hide": "Hide information"
+  },
+  "language": {
+    "label": "Language"
+  },
+  "exportPdf": "Export PDF"
 }
-
-
