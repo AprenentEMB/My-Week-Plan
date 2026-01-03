@@ -96,23 +96,21 @@ function App() {
       <SidebarLeft />
 
       <Helmet>
-  <html lang={i18n.language} />
-  <title>{t('seo.title')}</title>
+        <html lang={i18n.language} />
+        <title>{t('seo.title')}</title>
 
-  <meta name="description" content={t('seo.description')} />
+        <meta name="description" content={t('seo.description')} />
 
-  <meta property="og:title" content={t('seo.title')} />
-  <meta property="og:description" content={t('seo.description')} />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://weekmepro.com" />
+        <meta property="og:title" content={t('seo.title')} />
+        <meta property="og:description" content={t('seo.description')} />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://weekmepro.com" />
 
-  <link rel="canonical" href="https://weekmepro.com" />
-</Helmet>
+        <link rel="canonical" href="https://weekmepro.com" />
+      </Helmet>
 
       <Hero />
-      <h1 className="sr-only">
-  {t('seo.title')}
-</h1>
+      <h1 className="sr-only">{t('seo.title')}</h1>
 
       {/* Cursor flotant */}
       {einaSeleccionada && iconsForCursor.includes(einaSeleccionada.id) && <CursorFlotant />}
@@ -143,7 +141,7 @@ function App() {
         >
           <ExportaPDFButton
             targetId="taula-horari"
-            fileName="HorariSetmanal.pdf"
+            fileName="WeekMePro.pdf"
             setCoffeeModalVisible={setCoffeeModalVisible}
           />
         </motion.div>
