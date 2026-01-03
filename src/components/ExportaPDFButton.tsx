@@ -4,6 +4,8 @@ import jsPDF from 'jspdf';
 import { Button } from '@/components/ui/button';
 import { Download } from 'lucide-react';
 import { usePlanejadorStore } from '@/stores/store';
+import { useTranslation } from "react-i18next";
+
 
 
 
@@ -19,6 +21,8 @@ export const ExportaPDFButton: React.FC<ExportaPDFButtonProps> = ({
   setCoffeeModalVisible
 }) => {
   const { setExportantPDF } = usePlanejadorStore();
+  const { t } = useTranslation();
+
   
 
   const handleExport = async () => {
@@ -94,19 +98,18 @@ export const ExportaPDFButton: React.FC<ExportaPDFButtonProps> = ({
       setExportantPDF(false);
     }
   };
+return (
+  <>
+    <Button
+      onClick={handleExport}
+      className="flex items-center gap-2 bg-teal-600 hover:bg-teal-700 text-white px-3 py-2 rounded-md"
+      title={t("exportPdf")}   // opcional (tooltip / accessibilitat)
+    >
+      <Download className="h-4 w-4" />
+      {t("exportPdf")}
+    </Button>
+  </>
+);
 
-  return (
-    <>
-      <Button
-        onClick={handleExport}
-        className="flex items-center gap-2 bg-teal-600 hover:bg-teal-700 text-white px-3 py-2 rounded-md"
-      >
-        <Download className="h-4 w-4" />
-        Exporta PDF
-      </Button>
-
-      
-    </>
-  );
 };
 
