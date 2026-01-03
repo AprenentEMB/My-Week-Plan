@@ -82,19 +82,19 @@ export function Eines() {
 
   return (
     <div
-      className={`flex flex-col items-center gap-2 ${textColorClass}`}
+      className={`flex flex-col items-center gap-2 lg:pl-24 xl:pl-0 ${textColorClass}`}
       onClick={() => {
         if (einaSeleccionada?.id === 'paint') {
           setGeneralBackgroundColor(colorEscollitTemporal || 'white');
         }
       }}
     >
-      <div className="flex space-x-2 justify-center mt-4" onClick={e => e.stopPropagation()}>
+      <div className="flex space-x-0.5 lg:space-x-2 justify-center mt-4" onClick={e => e.stopPropagation()}>
         {einesDisponibles.map(eina => (
-          <motion.div key={eina.id} className="flex flex-col items-center gap-3" whileHover={{ scale: 1.2 }}
+          <motion.div key={eina.id} className="flex flex-col items-center gap-1 lg:gap-3" whileHover={{ scale: 1.2 }}
             whileTap={{ scale: 0.8 }}>
             <button
-              className={`w-15 h-15 flex items-center justify-center rounded-full border transition-colors ${
+              className={`w-10 h-10 lg:w-12 lg:h-12 xl:w-15 xl:h-15 flex items-center justify-center rounded-full border transition-colors ${
                 einaSeleccionada?.id === eina.id
                   ? 'bg-blue-500 text-white'
                   : 'bg-white text-black'
@@ -102,7 +102,7 @@ export function Eines() {
               onClick={() => handleEinaClick(eina)}
               type="button"
             >
-              <span className="text-2xl leading-none">{eina.icona}</span>
+              <span className="text-l lg:text-2xl leading-none">{eina.icona}</span>
             </button>
             <div className="text-xs text-center px-1">{eina.nom}</div>
           </motion.div>

@@ -57,6 +57,7 @@ function App() {
 
   const iconsForCursor = ['cut', 'merge', 'eraser', 'text', 'paint'];
 
+  
   if (isMobilePortrait) {
     return (
       <div className="flex flex-col items-center justify-center h-screen bg-gray-900 text-white text-center px-6">
@@ -65,6 +66,7 @@ function App() {
       </div>
     );
   }
+    
 
   return (
     <motion.div
@@ -122,9 +124,9 @@ function App() {
         {/* Barra superior d’eines */}
         <motion.div
           className="
-            w-full max-w-6xl mt-4
+            max-w-4xl md:max-w-6xl mt-4
             flex items-start gap-3
-            overflow-x-auto sm:overflow-x-visible
+            overflow-x-auto overflow-y-auto sm:overflow-y-hidden sm:overflow-x-hidden
             px-1
           "
           onClick={e => e.stopPropagation()}
@@ -134,12 +136,12 @@ function App() {
             background: generalBackgroundColor,
           }}
         >
-          <div className="flex items-center gap-2 min-w-max px-2 sm:pl-16">
+          <div className="flex flex-col lg:flex-row items-center gap-2 px-2 pl-16 lg:pl-2 md:min-w-max">
             <Eines />
-          </div>
+       
 
           <motion.div
-            className="shrink-0 mr-2 sm:mr-20"
+            className="shrink-0 mr-2 sm:mr-20 sm:ml-4"
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
           >
@@ -149,13 +151,14 @@ function App() {
               setCoffeeModalVisible={setCoffeeModalVisible}
             />
           </motion.div>
+             </div>
           <CoffeeModal visible={coffeeModalVisible} onClose={() => setCoffeeModalVisible(false)} />
         </motion.div>
 
         {/* ─── Taula planificador ─── */}
-        <div className="w-full flex justify-center pl-0 md:pl-26 xl:pl-0">
+        <div className="flex justify-center pl-0 sm:pr-12 md:pl-26 xl:pl-0">
           <motion.div
-            className={`w-full mt-6 flex flex-col items-stretch min-w-0 ${
+            className={`mt-6 flex flex-col items-stretch min-w-0 ${
               exportantPDF ? 'max-w-none min-h-full' : 'max-w-5xl'
             }`}
             onClick={e => e.stopPropagation()}
@@ -164,16 +167,15 @@ function App() {
             style={{
               WebkitOverflowScrolling: 'touch',
               background: generalBackgroundColor,
-              width: '100%',
               minHeight: exportantPDF ? 'fit-content' : 'auto',
               display: 'flex',
             }}
           >
             {/* ⚡ A mòbil fem que la taula ocupi tota l'amplada de la pantalla */}
-            <div className="w-full overflow-visible">
-              <div className="w-full sm:min-w-[900px]">
+            <div className="overflow-y-auto overflow-x-auto sm:overflow-x-hidden sm:overflow-y-visible max-w-full">
+             
                 <PlanejadorSetmanal />
-              </div>
+              
             </div>
           </motion.div>
         </div>

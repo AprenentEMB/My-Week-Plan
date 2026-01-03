@@ -28,7 +28,7 @@ export function RowHeader() {
         return (
           <th
             key={dia}
-            className={`w-40 min-w-[120px] border border-gray-300 p-2 text-center ${textClass}`}
+            className={`w-20 min-w-[50px] lg:w-40 lg:min-w-[90px] border border-gray-300 p-2 text-center ${textClass}`}
             style={{ background: bg }}
             onClick={() => {
               if (einaSeleccionada?.id === 'paint' && colorEscollitTemporal) {
@@ -38,7 +38,7 @@ export function RowHeader() {
               }
             }}
           >
-            {t(`days.${dia.toLowerCase()}`)}
+           <h3 className="text-xs lg:text-lg font-semibold">{t(`days.${dia.toLowerCase()}`)}</h3>
           </th>
         );
       })}

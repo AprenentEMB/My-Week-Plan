@@ -119,7 +119,7 @@ export function SidebarLeft() {
   }, [activeTutorial, open]);
 
   return (
-    <Sidebar className={`transition-all duration-300 ${collapsed ? 'w-26' : 'w-80'}`}>
+    <Sidebar className={`transition-all duration-300 ${collapsed ? 'w-16' : 'w-80'}`}>
       <SidebarHeader className="flex items-center justify-between px-2">
         <div className="flex-1">
           {!collapsed ? (

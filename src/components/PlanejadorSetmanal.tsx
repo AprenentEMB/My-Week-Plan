@@ -79,7 +79,7 @@ export function PlanejadorSetmanal() {
     className="
       w-full height-auto rounded-md shadow-lg
       p-2 sm:p-6 pb-20 mb-3 z-0 pdf-friendly
-      overflow-x-auto overflow-y-auto sm:overflow-visible
+      overflow-x-auto sm:overflow-visible
     "
     style={{
       WebkitOverflowScrolling: 'touch',
@@ -91,15 +91,15 @@ export function PlanejadorSetmanal() {
       }
     }}
   >
-   <table
-  className="table-auto sm:min-w-[700px]"
-  style={{
-    backgroundColor: generalBackgroundColor,
-    borderCollapse: 'collapse',
-    tableLayout: 'fixed',
-  }}
-  onClick={e => e.stopPropagation()}
->
+    <table
+      className="table-auto max-w-[200px] sm:max-w-[400px] md:max-w-[600px] lg:max-w-[1000px] md:min-w-0"
+      style={{
+        backgroundColor: generalBackgroundColor,
+        borderCollapse: 'collapse',
+        tableLayout: 'fixed',
+      }}
+      onClick={e => e.stopPropagation()}
+    >
       <thead>
         <RowHeader />
       </thead>
