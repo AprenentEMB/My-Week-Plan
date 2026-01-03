@@ -89,7 +89,6 @@ function App() {
 
       {/* ─── Contingut principal ─── */}
       <div className="w-full flex flex-col items-start sm:items-center">
-
         {/* Header / Branding */}
         <div className="w-full max-w-5xl flex items-center justify-between mt-4 px-2 sm:ml-16">
           <motion.h1
@@ -153,32 +152,31 @@ function App() {
           <CoffeeModal visible={coffeeModalVisible} onClose={() => setCoffeeModalVisible(false)} />
         </motion.div>
 
- {/* ─── Taula planificador ─── */}
-<div className="w-full flex justify-center pl-0 md:pl-26 xl:pl-0">
-  <motion.div
-    className={`w-full mt-6 flex flex-col items-stretch min-w-0 ${
-      exportantPDF ? 'max-w-none min-h-full' : 'max-w-5xl'
-    }`}
-    onClick={e => e.stopPropagation()}
-    variants={itemVariants as Variants}
-    transition={{ delay: 0.1 }}
-    style={{
-      WebkitOverflowScrolling: 'touch',
-      background: generalBackgroundColor,
-      width: '100%',
-      minHeight: exportantPDF ? 'fit-content' : 'auto',
-      display: 'flex',
-    }}
-  >
-    {/* ⚡ Només a mòbil: envoltem la taula amb overflow-x-auto */}
-    <div className="w-full sm:overflow-visible overflow-x-auto">
-      <div className="min-w-[900px] sm:min-w-0">
-        <PlanejadorSetmanal />
-      </div>
-    </div>
-  </motion.div>
-</div>
-
+        {/* ─── Taula planificador ─── */}
+        <div className="w-full flex justify-center pl-0 md:pl-26 xl:pl-0">
+          <motion.div
+            className={`w-full mt-6 flex flex-col items-stretch min-w-0 ${
+              exportantPDF ? 'max-w-none min-h-full' : 'max-w-5xl'
+            }`}
+            onClick={e => e.stopPropagation()}
+            variants={itemVariants as Variants}
+            transition={{ delay: 0.1 }}
+            style={{
+              WebkitOverflowScrolling: 'touch',
+              background: generalBackgroundColor,
+              width: '100%',
+              minHeight: exportantPDF ? 'fit-content' : 'auto',
+              display: 'flex',
+            }}
+          >
+            {/* ⚡ A mòbil fem que la taula ocupi tota l'amplada de la pantalla */}
+            <div className="w-full overflow-visible">
+              <div className="w-full sm:min-w-[900px]">
+                <PlanejadorSetmanal />
+              </div>
+            </div>
+          </motion.div>
+        </div>
       </div>
 
       {/* ─── Formulari activitats ─── */}
@@ -214,4 +212,3 @@ function App() {
 }
 
 export default App;
-
