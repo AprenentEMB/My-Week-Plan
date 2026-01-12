@@ -57,7 +57,6 @@ function App() {
 
   const iconsForCursor = ['cut', 'merge', 'eraser', 'text', 'paint'];
 
-  
   if (isMobilePortrait) {
     return (
       <div className="flex flex-col items-center justify-center h-screen bg-gray-900 text-white text-center px-6">
@@ -66,7 +65,6 @@ function App() {
       </div>
     );
   }
-    
 
   return (
     <motion.div
@@ -138,20 +136,19 @@ function App() {
         >
           <div className="flex flex-col lg:flex-row items-center gap-2 px-2 pl-16 lg:pl-2 md:min-w-max">
             <Eines />
-       
 
-          <motion.div
-            className="shrink-0 mr-2 sm:mr-20 sm:ml-4"
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-          >
-            <ExportaPDFButton
-              targetId="taula-horari"
-              fileName="WeekMePro.pdf"
-              setCoffeeModalVisible={setCoffeeModalVisible}
-            />
-          </motion.div>
-             </div>
+            <motion.div
+              className="shrink-0 mr-2 sm:mr-20 sm:ml-4"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+            >
+              <ExportaPDFButton
+                targetId="taula-horari"
+                fileName="WeekMePro.pdf"
+                setCoffeeModalVisible={setCoffeeModalVisible}
+              />
+            </motion.div>
+          </div>
           <CoffeeModal visible={coffeeModalVisible} onClose={() => setCoffeeModalVisible(false)} />
         </motion.div>
 
@@ -173,9 +170,7 @@ function App() {
           >
             {/* ⚡ A mòbil fem que la taula ocupi tota l'amplada de la pantalla */}
             <div className="overflow-y-auto overflow-x-auto sm:overflow-x-hidden sm:overflow-y-visible max-w-full">
-             
-                <PlanejadorSetmanal />
-              
+              <PlanejadorSetmanal />
             </div>
           </motion.div>
         </div>
